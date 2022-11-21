@@ -1,0 +1,1164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bankTable">
+          <Key>
+            <PropertyRef Name="bankID" />
+          </Key>
+          <Property Name="bankID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bankCode" Type="nvarchar(max)" />
+          <Property Name="bankDescription" Type="nvarchar(max)" />
+          <Property Name="bankName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="expenceTable">
+          <Key>
+            <PropertyRef Name="expenceID" />
+          </Key>
+          <Property Name="expenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="expenceCode" Type="nvarchar(max)" />
+          <Property Name="expenceDescription" Type="nvarchar(max)" />
+          <Property Name="expenceBool" Type="bit" />
+        </EntityType>
+        <EntityType Name="FileTables">
+          <Key>
+            <PropertyRef Name="fileID" />
+          </Key>
+          <Property Name="fileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="store_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="fileURL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="fileName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AddedDate" Type="datetime" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="DeletedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="invoiceLogTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Admin" Type="bit" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="250" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="invoiceId" Type="int" />
+          <Property Name="store_id" Type="int" />
+          <Property Name="newstore_id" Type="int" />
+          <Property Name="expence_id" Type="int" />
+          <Property Name="newexpence_id" Type="int" />
+          <Property Name="bank_id" Type="int" />
+          <Property Name="newbank_id" Type="int" />
+          <Property Name="cash" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="newcash" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="credit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="newcredit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="newamount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="invoiceDate" Type="date" Nullable="false" />
+          <Property Name="newinvoiceDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="invoiceTable">
+          <Key>
+            <PropertyRef Name="invoiceID" />
+          </Key>
+          <Property Name="invoiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="store_id" Type="int" Nullable="false" />
+          <Property Name="bank_id" Type="int" Nullable="false" />
+          <Property Name="expence_id" Type="int" Nullable="false" />
+          <Property Name="cash" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="credit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="expenceDescription" Type="nvarchar(max)" />
+          <Property Name="invoiceDate" Type="datetime" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="odemeTuruTablosu_id" Type="int" Nullable="false" />
+          <Property Name="taksitSayisi" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="odemeTuruTablosu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="odemeTur" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="resfundTable">
+          <Key>
+            <PropertyRef Name="refundID" />
+          </Key>
+          <Property Name="refundID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="store_id" Type="int" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="bank_id" Type="int" />
+          <Property Name="resfundType" Type="int" />
+          <Property Name="resfundDescription" Type="nvarchar(max)" />
+          <Property Name="resfundFiles" Type="nvarchar(max)" />
+          <Property Name="resfundCash" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="resfundDate" Type="datetime" />
+          <Property Name="resfundCredit" Type="decimal" Precision="18" Scale="3" />
+        </EntityType>
+        <EntityType Name="resfundTypeTable">
+          <Key>
+            <PropertyRef Name="resfundTypeID" />
+          </Key>
+          <Property Name="resfundTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="resfundTypeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="roleTable">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="storeTable">
+          <Key>
+            <PropertyRef Name="storeID" />
+          </Key>
+          <Property Name="storeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="storeCode" Type="nvarchar(max)" />
+          <Property Name="storeName" Type="nvarchar(max)" />
+          <Property Name="storeDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="userTable">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="store_id" Type="int" />
+          <Property Name="isOnline" Type="bit" />
+          <Property Name="loginDate" Type="datetime" />
+          <Property Name="logoutDate" Type="datetime" />
+          <Property Name="user_position" Type="nvarchar" MaxLength="50" />
+          <Property Name="cashier_code" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BES2.dbo.vwInvoiceLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwInvoiceLog">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="newamount" />
+            <PropertyRef Name="invoiceDate" />
+            <PropertyRef Name="newinvoiceDate" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Admin" Type="bit" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="250" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="invoiceId" Type="int" />
+          <Property Name="store_id" Type="int" />
+          <Property Name="newstore_id" Type="int" />
+          <Property Name="expence_id" Type="int" />
+          <Property Name="newexpence_id" Type="int" />
+          <Property Name="bank_id" Type="int" />
+          <Property Name="newbank_id" Type="int" />
+          <Property Name="cash" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="newcash" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="credit" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="newcredit" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="newamount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="invoiceDate" Type="date" Nullable="false" />
+          <Property Name="newinvoiceDate" Type="date" Nullable="false" />
+          <Property Name="newexpenceCode" Type="nvarchar(max)" />
+          <Property Name="expenceCode" Type="nvarchar(max)" />
+          <Property Name="storeCode" Type="nvarchar(max)" />
+          <Property Name="newstoreCode" Type="nvarchar(max)" />
+          <Property Name="newbankCode" Type="nvarchar(max)" />
+          <Property Name="bankCode" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_FileTables_storeTable">
+          <End Role="storeTable" Type="Self.storeTable" Multiplicity="1" />
+          <End Role="FileTables" Type="Self.FileTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="storeTable">
+              <PropertyRef Name="storeID" />
+            </Principal>
+            <Dependent Role="FileTables">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FileTables_userTable">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="1" />
+          <End Role="FileTables" Type="Self.FileTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="FileTables">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_bankTable">
+          <End Role="bankTable" Type="Self.bankTable" Multiplicity="1" />
+          <End Role="invoiceTable" Type="Self.invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bankTable">
+              <PropertyRef Name="bankID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_expenceTable">
+          <End Role="expenceTable" Type="Self.expenceTable" Multiplicity="1" />
+          <End Role="invoiceTable" Type="Self.invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expenceTable">
+              <PropertyRef Name="expenceID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="expence_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_odemeTuruTablosu">
+          <End Role="odemeTuruTablosu" Type="Self.odemeTuruTablosu" Multiplicity="1" />
+          <End Role="invoiceTable" Type="Self.invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="odemeTuruTablosu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="odemeTuruTablosu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_storeTable">
+          <End Role="storeTable" Type="Self.storeTable" Multiplicity="1" />
+          <End Role="invoiceTable" Type="Self.invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="storeTable">
+              <PropertyRef Name="storeID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_userTable">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="0..1" />
+          <End Role="invoiceTable" Type="Self.invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resfundTable_bankTable">
+          <End Role="bankTable" Type="Self.bankTable" Multiplicity="0..1" />
+          <End Role="resfundTable" Type="Self.resfundTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bankTable">
+              <PropertyRef Name="bankID" />
+            </Principal>
+            <Dependent Role="resfundTable">
+              <PropertyRef Name="bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resfundTable_resfundTypeTable">
+          <End Role="resfundTypeTable" Type="Self.resfundTypeTable" Multiplicity="0..1" />
+          <End Role="resfundTable" Type="Self.resfundTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resfundTypeTable">
+              <PropertyRef Name="resfundTypeID" />
+            </Principal>
+            <Dependent Role="resfundTable">
+              <PropertyRef Name="resfundType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resfundTable_storeTable">
+          <End Role="storeTable" Type="Self.storeTable" Multiplicity="0..1" />
+          <End Role="resfundTable" Type="Self.resfundTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="storeTable">
+              <PropertyRef Name="storeID" />
+            </Principal>
+            <Dependent Role="resfundTable">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resfundTable_userTable">
+          <End Role="userTable" Type="Self.userTable" Multiplicity="0..1" />
+          <End Role="resfundTable" Type="Self.resfundTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="resfundTable">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userTable_roleTable">
+          <End Role="roleTable" Type="Self.roleTable" Multiplicity="1" />
+          <End Role="userTable" Type="Self.userTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roleTable">
+              <PropertyRef Name="roleID" />
+            </Principal>
+            <Dependent Role="userTable">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userTable_storeTable">
+          <End Role="storeTable" Type="Self.storeTable" Multiplicity="0..1" />
+          <End Role="userTable" Type="Self.userTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="storeTable">
+              <PropertyRef Name="storeID" />
+            </Principal>
+            <Dependent Role="userTable">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="masrafRaporHazirlamaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startdate" Type="date" Mode="In" />
+          <Parameter Name="enddate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ozetMasrafRaporHazirlamaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startdate" Type="date" Mode="In" />
+          <Parameter Name="enddate" Type="date" Mode="In" />
+          <Parameter Name="store_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="raporHazirlamaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startdate" Type="date" Mode="In" />
+          <Parameter Name="enddate" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="BESModelStoreContainer">
+          <EntitySet Name="bankTable" EntityType="Self.bankTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="expenceTable" EntityType="Self.expenceTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileTables" EntityType="Self.FileTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invoiceLogTable" EntityType="Self.invoiceLogTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invoiceTable" EntityType="Self.invoiceTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="odemeTuruTablosu" EntityType="Self.odemeTuruTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="resfundTable" EntityType="Self.resfundTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="resfundTypeTable" EntityType="Self.resfundTypeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roleTable" EntityType="Self.roleTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="storeTable" EntityType="Self.storeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userTable" EntityType="Self.userTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwInvoiceLog" EntityType="Self.vwInvoiceLog" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwInvoiceLog].[Id] AS [Id], 
+    [vwInvoiceLog].[UserId] AS [UserId], 
+    [vwInvoiceLog].[Admin] AS [Admin], 
+    [vwInvoiceLog].[UserName] AS [UserName], 
+    [vwInvoiceLog].[UpdateTime] AS [UpdateTime], 
+    [vwInvoiceLog].[invoiceId] AS [invoiceId], 
+    [vwInvoiceLog].[store_id] AS [store_id], 
+    [vwInvoiceLog].[newstore_id] AS [newstore_id], 
+    [vwInvoiceLog].[expence_id] AS [expence_id], 
+    [vwInvoiceLog].[newexpence_id] AS [newexpence_id], 
+    [vwInvoiceLog].[bank_id] AS [bank_id], 
+    [vwInvoiceLog].[newbank_id] AS [newbank_id], 
+    [vwInvoiceLog].[cash] AS [cash], 
+    [vwInvoiceLog].[newcash] AS [newcash], 
+    [vwInvoiceLog].[credit] AS [credit], 
+    [vwInvoiceLog].[newcredit] AS [newcredit], 
+    [vwInvoiceLog].[amount] AS [amount], 
+    [vwInvoiceLog].[newamount] AS [newamount], 
+    [vwInvoiceLog].[invoiceDate] AS [invoiceDate], 
+    [vwInvoiceLog].[newinvoiceDate] AS [newinvoiceDate], 
+    [vwInvoiceLog].[newexpenceCode] AS [newexpenceCode], 
+    [vwInvoiceLog].[expenceCode] AS [expenceCode], 
+    [vwInvoiceLog].[storeCode] AS [storeCode], 
+    [vwInvoiceLog].[newstoreCode] AS [newstoreCode], 
+    [vwInvoiceLog].[newbankCode] AS [newbankCode], 
+    [vwInvoiceLog].[bankCode] AS [bankCode]
+    FROM [dbo].[vwInvoiceLog] AS [vwInvoiceLog]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_FileTables_storeTable" Association="Self.FK_FileTables_storeTable">
+            <End Role="storeTable" EntitySet="storeTable" />
+            <End Role="FileTables" EntitySet="FileTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FileTables_userTable" Association="Self.FK_FileTables_userTable">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="FileTables" EntitySet="FileTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_bankTable" Association="Self.FK_invoiceTable_bankTable">
+            <End Role="bankTable" EntitySet="bankTable" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_expenceTable" Association="Self.FK_invoiceTable_expenceTable">
+            <End Role="expenceTable" EntitySet="expenceTable" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_odemeTuruTablosu" Association="Self.FK_invoiceTable_odemeTuruTablosu">
+            <End Role="odemeTuruTablosu" EntitySet="odemeTuruTablosu" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_storeTable" Association="Self.FK_invoiceTable_storeTable">
+            <End Role="storeTable" EntitySet="storeTable" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_userTable" Association="Self.FK_invoiceTable_userTable">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resfundTable_bankTable" Association="Self.FK_resfundTable_bankTable">
+            <End Role="bankTable" EntitySet="bankTable" />
+            <End Role="resfundTable" EntitySet="resfundTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resfundTable_resfundTypeTable" Association="Self.FK_resfundTable_resfundTypeTable">
+            <End Role="resfundTypeTable" EntitySet="resfundTypeTable" />
+            <End Role="resfundTable" EntitySet="resfundTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resfundTable_storeTable" Association="Self.FK_resfundTable_storeTable">
+            <End Role="storeTable" EntitySet="storeTable" />
+            <End Role="resfundTable" EntitySet="resfundTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resfundTable_userTable" Association="Self.FK_resfundTable_userTable">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="resfundTable" EntitySet="resfundTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userTable_roleTable" Association="Self.FK_userTable_roleTable">
+            <End Role="roleTable" EntitySet="roleTable" />
+            <End Role="userTable" EntitySet="userTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userTable_storeTable" Association="Self.FK_userTable_storeTable">
+            <End Role="storeTable" EntitySet="storeTable" />
+            <End Role="userTable" EntitySet="userTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BESModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BESEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="raporHazirlamaSP" ReturnType="Collection(BESModel.raporHazirlamaSP_Result)">
+            <Parameter Name="startdate" Mode="In" Type="DateTime" />
+            <Parameter Name="enddate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="masrafRaporHazirlamaSP" ReturnType="Collection(BESModel.masrafRaporHazirlamaSP_Result)">
+            <Parameter Name="startdate" Mode="In" Type="DateTime" />
+            <Parameter Name="enddate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ozetMasrafRaporHazirlamaSP" ReturnType="Collection(BESModel.ozetMasrafRaporHazirlamaSP_Result)">
+            <Parameter Name="startdate" Mode="In" Type="DateTime" />
+            <Parameter Name="enddate" Mode="In" Type="DateTime" />
+            <Parameter Name="store_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="bankTable" EntityType="BESModel.bankTable" />
+          <EntitySet Name="expenceTable" EntityType="BESModel.expenceTable" />
+          <EntitySet Name="FileTables" EntityType="BESModel.FileTables" />
+          <EntitySet Name="invoiceLogTable" EntityType="BESModel.invoiceLogTable" />
+          <EntitySet Name="invoiceTable" EntityType="BESModel.invoiceTable" />
+          <EntitySet Name="odemeTuruTablosu" EntityType="BESModel.odemeTuruTablosu" />
+          <EntitySet Name="resfundTable" EntityType="BESModel.resfundTable" />
+          <EntitySet Name="resfundTypeTable" EntityType="BESModel.resfundTypeTable" />
+          <EntitySet Name="roleTable" EntityType="BESModel.roleTable" />
+          <EntitySet Name="storeTable" EntityType="BESModel.storeTable" />
+          <EntitySet Name="sysdiagrams" EntityType="BESModel.sysdiagrams" />
+          <EntitySet Name="userTable" EntityType="BESModel.userTable" />
+          <EntitySet Name="vwInvoiceLog" EntityType="BESModel.vwInvoiceLog" />
+          <AssociationSet Name="FK_invoiceTable_bankTable" Association="BESModel.FK_invoiceTable_bankTable">
+            <End Role="bankTable" EntitySet="bankTable" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resfundTable_bankTable" Association="BESModel.FK_resfundTable_bankTable">
+            <End Role="bankTable" EntitySet="bankTable" />
+            <End Role="resfundTable" EntitySet="resfundTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_expenceTable" Association="BESModel.FK_invoiceTable_expenceTable">
+            <End Role="expenceTable" EntitySet="expenceTable" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FileTables_storeTable" Association="BESModel.FK_FileTables_storeTable">
+            <End Role="storeTable" EntitySet="storeTable" />
+            <End Role="FileTables" EntitySet="FileTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FileTables_userTable" Association="BESModel.FK_FileTables_userTable">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="FileTables" EntitySet="FileTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_odemeTuruTablosu" Association="BESModel.FK_invoiceTable_odemeTuruTablosu">
+            <End Role="odemeTuruTablosu" EntitySet="odemeTuruTablosu" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_storeTable" Association="BESModel.FK_invoiceTable_storeTable">
+            <End Role="storeTable" EntitySet="storeTable" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invoiceTable_userTable" Association="BESModel.FK_invoiceTable_userTable">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="invoiceTable" EntitySet="invoiceTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resfundTable_resfundTypeTable" Association="BESModel.FK_resfundTable_resfundTypeTable">
+            <End Role="resfundTypeTable" EntitySet="resfundTypeTable" />
+            <End Role="resfundTable" EntitySet="resfundTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resfundTable_storeTable" Association="BESModel.FK_resfundTable_storeTable">
+            <End Role="storeTable" EntitySet="storeTable" />
+            <End Role="resfundTable" EntitySet="resfundTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resfundTable_userTable" Association="BESModel.FK_resfundTable_userTable">
+            <End Role="userTable" EntitySet="userTable" />
+            <End Role="resfundTable" EntitySet="resfundTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userTable_roleTable" Association="BESModel.FK_userTable_roleTable">
+            <End Role="roleTable" EntitySet="roleTable" />
+            <End Role="userTable" EntitySet="userTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userTable_storeTable" Association="BESModel.FK_userTable_storeTable">
+            <End Role="storeTable" EntitySet="storeTable" />
+            <End Role="userTable" EntitySet="userTable" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="raporHazirlamaSP_Result">
+          <Property Type="String" Name="Mağaza_Adı" Nullable="true" />
+          <Property Type="Decimal" Name="Nakit" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="Banka_Kredi_Kartı" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="Masraf" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="Durum" Nullable="true" Precision="38" Scale="3" />
+        </ComplexType>
+        <ComplexType Name="masrafRaporHazirlamaSP_Result">
+          <Property Type="String" Name="Mağaza_Adı" Nullable="true" />
+          <Property Type="String" Name="Masraf_Kodu" Nullable="true" />
+          <Property Type="String" Name="Masraf_Açıklama" Nullable="true" />
+          <Property Type="Decimal" Name="Masraf" Nullable="true" Precision="38" Scale="3" />
+        </ComplexType>
+        <ComplexType Name="ozetMasrafRaporHazirlamaSP_Result">
+          <Property Type="String" Name="Mağaza_Adı" Nullable="true" />
+          <Property Type="String" Name="Masraf_Açıklama" Nullable="true" />
+          <Property Type="Decimal" Name="Masraf" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="String" Name="Masraf_Adı" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="bankTable">
+          <Key>
+            <PropertyRef Name="bankID" />
+          </Key>
+          <Property Name="bankID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bankCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bankDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bankName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="invoiceTable" Relationship="BESModel.FK_invoiceTable_bankTable" FromRole="bankTable" ToRole="invoiceTable" />
+          <NavigationProperty Name="resfundTable" Relationship="BESModel.FK_resfundTable_bankTable" FromRole="bankTable" ToRole="resfundTable" />
+        </EntityType>
+        <EntityType Name="expenceTable">
+          <Key>
+            <PropertyRef Name="expenceID" />
+          </Key>
+          <Property Name="expenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="expenceCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="expenceDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="expenceBool" Type="Boolean" />
+          <NavigationProperty Name="invoiceTable" Relationship="BESModel.FK_invoiceTable_expenceTable" FromRole="expenceTable" ToRole="invoiceTable" />
+        </EntityType>
+        <EntityType Name="FileTables">
+          <Key>
+            <PropertyRef Name="fileID" />
+          </Key>
+          <Property Name="fileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="store_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="fileURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AddedDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="storeTable" Relationship="BESModel.FK_FileTables_storeTable" FromRole="FileTables" ToRole="storeTable" />
+          <NavigationProperty Name="userTable" Relationship="BESModel.FK_FileTables_userTable" FromRole="FileTables" ToRole="userTable" />
+        </EntityType>
+        <EntityType Name="invoiceLogTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Admin" Type="Boolean" />
+          <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="invoiceId" Type="Int32" />
+          <Property Name="store_id" Type="Int32" />
+          <Property Name="newstore_id" Type="Int32" />
+          <Property Name="expence_id" Type="Int32" />
+          <Property Name="newexpence_id" Type="Int32" />
+          <Property Name="bank_id" Type="Int32" />
+          <Property Name="newbank_id" Type="Int32" />
+          <Property Name="cash" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="newcash" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="credit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="newcredit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="newamount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="invoiceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="newinvoiceDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="invoiceTable">
+          <Key>
+            <PropertyRef Name="invoiceID" />
+          </Key>
+          <Property Name="invoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="store_id" Type="Int32" Nullable="false" />
+          <Property Name="bank_id" Type="Int32" Nullable="false" />
+          <Property Name="expence_id" Type="Int32" Nullable="false" />
+          <Property Name="cash" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="credit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="expenceDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="invoiceDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="odemeTuruTablosu_id" Type="Int32" Nullable="false" />
+          <Property Name="taksitSayisi" Type="Byte" />
+          <NavigationProperty Name="bankTable" Relationship="BESModel.FK_invoiceTable_bankTable" FromRole="invoiceTable" ToRole="bankTable" />
+          <NavigationProperty Name="expenceTable" Relationship="BESModel.FK_invoiceTable_expenceTable" FromRole="invoiceTable" ToRole="expenceTable" />
+          <NavigationProperty Name="odemeTuruTablosu" Relationship="BESModel.FK_invoiceTable_odemeTuruTablosu" FromRole="invoiceTable" ToRole="odemeTuruTablosu" />
+          <NavigationProperty Name="storeTable" Relationship="BESModel.FK_invoiceTable_storeTable" FromRole="invoiceTable" ToRole="storeTable" />
+          <NavigationProperty Name="userTable" Relationship="BESModel.FK_invoiceTable_userTable" FromRole="invoiceTable" ToRole="userTable" />
+        </EntityType>
+        <EntityType Name="odemeTuruTablosu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="odemeTur" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="invoiceTable" Relationship="BESModel.FK_invoiceTable_odemeTuruTablosu" FromRole="odemeTuruTablosu" ToRole="invoiceTable" />
+        </EntityType>
+        <EntityType Name="resfundTable">
+          <Key>
+            <PropertyRef Name="refundID" />
+          </Key>
+          <Property Name="refundID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="store_id" Type="Int32" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="bank_id" Type="Int32" />
+          <Property Name="resfundType" Type="Int32" />
+          <Property Name="resfundDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="resfundFiles" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="resfundCash" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="resfundDate" Type="DateTime" Precision="3" />
+          <Property Name="resfundCredit" Type="Decimal" Precision="18" Scale="3" />
+          <NavigationProperty Name="bankTable" Relationship="BESModel.FK_resfundTable_bankTable" FromRole="resfundTable" ToRole="bankTable" />
+          <NavigationProperty Name="resfundTypeTable" Relationship="BESModel.FK_resfundTable_resfundTypeTable" FromRole="resfundTable" ToRole="resfundTypeTable" />
+          <NavigationProperty Name="storeTable" Relationship="BESModel.FK_resfundTable_storeTable" FromRole="resfundTable" ToRole="storeTable" />
+          <NavigationProperty Name="userTable" Relationship="BESModel.FK_resfundTable_userTable" FromRole="resfundTable" ToRole="userTable" />
+        </EntityType>
+        <EntityType Name="resfundTypeTable">
+          <Key>
+            <PropertyRef Name="resfundTypeID" />
+          </Key>
+          <Property Name="resfundTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="resfundTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="resfundTable" Relationship="BESModel.FK_resfundTable_resfundTypeTable" FromRole="resfundTypeTable" ToRole="resfundTable" />
+        </EntityType>
+        <EntityType Name="roleTable">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="userTable" Relationship="BESModel.FK_userTable_roleTable" FromRole="roleTable" ToRole="userTable" />
+        </EntityType>
+        <EntityType Name="storeTable">
+          <Key>
+            <PropertyRef Name="storeID" />
+          </Key>
+          <Property Name="storeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="storeCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="storeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="storeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FileTables" Relationship="BESModel.FK_FileTables_storeTable" FromRole="storeTable" ToRole="FileTables" />
+          <NavigationProperty Name="invoiceTable" Relationship="BESModel.FK_invoiceTable_storeTable" FromRole="storeTable" ToRole="invoiceTable" />
+          <NavigationProperty Name="resfundTable" Relationship="BESModel.FK_resfundTable_storeTable" FromRole="storeTable" ToRole="resfundTable" />
+          <NavigationProperty Name="userTable" Relationship="BESModel.FK_userTable_storeTable" FromRole="storeTable" ToRole="userTable" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="userTable">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="store_id" Type="Int32" />
+          <Property Name="isOnline" Type="Boolean" />
+          <Property Name="loginDate" Type="DateTime" Precision="3" />
+          <Property Name="logoutDate" Type="DateTime" Precision="3" />
+          <Property Name="user_position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cashier_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FileTables" Relationship="BESModel.FK_FileTables_userTable" FromRole="userTable" ToRole="FileTables" />
+          <NavigationProperty Name="invoiceTable" Relationship="BESModel.FK_invoiceTable_userTable" FromRole="userTable" ToRole="invoiceTable" />
+          <NavigationProperty Name="resfundTable" Relationship="BESModel.FK_resfundTable_userTable" FromRole="userTable" ToRole="resfundTable" />
+          <NavigationProperty Name="roleTable" Relationship="BESModel.FK_userTable_roleTable" FromRole="userTable" ToRole="roleTable" />
+          <NavigationProperty Name="storeTable" Relationship="BESModel.FK_userTable_storeTable" FromRole="userTable" ToRole="storeTable" />
+        </EntityType>
+        <EntityType Name="vwInvoiceLog">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="newamount" />
+            <PropertyRef Name="invoiceDate" />
+            <PropertyRef Name="newinvoiceDate" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Admin" Type="Boolean" />
+          <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="invoiceId" Type="Int32" />
+          <Property Name="store_id" Type="Int32" />
+          <Property Name="newstore_id" Type="Int32" />
+          <Property Name="expence_id" Type="Int32" />
+          <Property Name="newexpence_id" Type="Int32" />
+          <Property Name="bank_id" Type="Int32" />
+          <Property Name="newbank_id" Type="Int32" />
+          <Property Name="cash" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="newcash" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="credit" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="newcredit" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="amount" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="newamount" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="invoiceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="newinvoiceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="newexpenceCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="expenceCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="storeCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="newstoreCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="newbankCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bankCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_invoiceTable_bankTable">
+          <End Type="BESModel.bankTable" Role="bankTable" Multiplicity="1" />
+          <End Type="BESModel.invoiceTable" Role="invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bankTable">
+              <PropertyRef Name="bankID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resfundTable_bankTable">
+          <End Type="BESModel.bankTable" Role="bankTable" Multiplicity="0..1" />
+          <End Type="BESModel.resfundTable" Role="resfundTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bankTable">
+              <PropertyRef Name="bankID" />
+            </Principal>
+            <Dependent Role="resfundTable">
+              <PropertyRef Name="bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_expenceTable">
+          <End Type="BESModel.expenceTable" Role="expenceTable" Multiplicity="1" />
+          <End Type="BESModel.invoiceTable" Role="invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expenceTable">
+              <PropertyRef Name="expenceID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="expence_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FileTables_storeTable">
+          <End Type="BESModel.storeTable" Role="storeTable" Multiplicity="1" />
+          <End Type="BESModel.FileTables" Role="FileTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="storeTable">
+              <PropertyRef Name="storeID" />
+            </Principal>
+            <Dependent Role="FileTables">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FileTables_userTable">
+          <End Type="BESModel.userTable" Role="userTable" Multiplicity="1" />
+          <End Type="BESModel.FileTables" Role="FileTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="FileTables">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_odemeTuruTablosu">
+          <End Type="BESModel.odemeTuruTablosu" Role="odemeTuruTablosu" Multiplicity="1" />
+          <End Type="BESModel.invoiceTable" Role="invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="odemeTuruTablosu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="odemeTuruTablosu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_storeTable">
+          <End Type="BESModel.storeTable" Role="storeTable" Multiplicity="1" />
+          <End Type="BESModel.invoiceTable" Role="invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="storeTable">
+              <PropertyRef Name="storeID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invoiceTable_userTable">
+          <End Type="BESModel.userTable" Role="userTable" Multiplicity="0..1" />
+          <End Type="BESModel.invoiceTable" Role="invoiceTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="invoiceTable">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resfundTable_resfundTypeTable">
+          <End Type="BESModel.resfundTypeTable" Role="resfundTypeTable" Multiplicity="0..1" />
+          <End Type="BESModel.resfundTable" Role="resfundTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resfundTypeTable">
+              <PropertyRef Name="resfundTypeID" />
+            </Principal>
+            <Dependent Role="resfundTable">
+              <PropertyRef Name="resfundType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resfundTable_storeTable">
+          <End Type="BESModel.storeTable" Role="storeTable" Multiplicity="0..1" />
+          <End Type="BESModel.resfundTable" Role="resfundTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="storeTable">
+              <PropertyRef Name="storeID" />
+            </Principal>
+            <Dependent Role="resfundTable">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resfundTable_userTable">
+          <End Type="BESModel.userTable" Role="userTable" Multiplicity="0..1" />
+          <End Type="BESModel.resfundTable" Role="resfundTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userTable">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="resfundTable">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userTable_roleTable">
+          <End Type="BESModel.roleTable" Role="roleTable" Multiplicity="1" />
+          <End Type="BESModel.userTable" Role="userTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roleTable">
+              <PropertyRef Name="roleID" />
+            </Principal>
+            <Dependent Role="userTable">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userTable_storeTable">
+          <End Type="BESModel.storeTable" Role="storeTable" Multiplicity="0..1" />
+          <End Type="BESModel.userTable" Role="userTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="storeTable">
+              <PropertyRef Name="storeID" />
+            </Principal>
+            <Dependent Role="userTable">
+              <PropertyRef Name="store_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BESModelStoreContainer" CdmEntityContainer="BESEntities">
+          <FunctionImportMapping FunctionImportName="raporHazirlamaSP" FunctionName="BESModel.Store.raporHazirlamaSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BESModel.raporHazirlamaSP_Result">
+                <ScalarProperty Name="Mağaza_Adı" ColumnName="Mağaza Adı" />
+                <ScalarProperty Name="Nakit" ColumnName="Nakit" />
+                <ScalarProperty Name="Banka_Kredi_Kartı" ColumnName="Banka/Kredi Kartı" />
+                <ScalarProperty Name="Masraf" ColumnName="Masraf" />
+                <ScalarProperty Name="Durum" ColumnName="Durum" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="masrafRaporHazirlamaSP" FunctionName="BESModel.Store.masrafRaporHazirlamaSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BESModel.masrafRaporHazirlamaSP_Result">
+                <ScalarProperty Name="Mağaza_Adı" ColumnName="Mağaza Adı" />
+                <ScalarProperty Name="Masraf_Kodu" ColumnName="Masraf Kodu" />
+                <ScalarProperty Name="Masraf_Açıklama" ColumnName="Masraf Açıklama" />
+                <ScalarProperty Name="Masraf" ColumnName="Masraf" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ozetMasrafRaporHazirlamaSP" FunctionName="BESModel.Store.ozetMasrafRaporHazirlamaSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BESModel.ozetMasrafRaporHazirlamaSP_Result">
+                <ScalarProperty Name="Mağaza_Adı" ColumnName="Mağaza Adı" />
+                <ScalarProperty Name="Masraf_Açıklama" ColumnName="Masraf Açıklama" />
+                <ScalarProperty Name="Masraf" ColumnName="Masraf" />
+                <ScalarProperty Name="Masraf_Adı" ColumnName="Masraf Adı" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="bankTable">
+            <EntityTypeMapping TypeName="BESModel.bankTable">
+              <MappingFragment StoreEntitySet="bankTable">
+                <ScalarProperty Name="bankName" ColumnName="bankName" />
+                <ScalarProperty Name="bankDescription" ColumnName="bankDescription" />
+                <ScalarProperty Name="bankCode" ColumnName="bankCode" />
+                <ScalarProperty Name="bankID" ColumnName="bankID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expenceTable">
+            <EntityTypeMapping TypeName="BESModel.expenceTable">
+              <MappingFragment StoreEntitySet="expenceTable">
+                <ScalarProperty Name="expenceBool" ColumnName="expenceBool" />
+                <ScalarProperty Name="expenceDescription" ColumnName="expenceDescription" />
+                <ScalarProperty Name="expenceCode" ColumnName="expenceCode" />
+                <ScalarProperty Name="expenceID" ColumnName="expenceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileTables">
+            <EntityTypeMapping TypeName="BESModel.FileTables">
+              <MappingFragment StoreEntitySet="FileTables">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="fileURL" ColumnName="fileURL" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="store_id" ColumnName="store_id" />
+                <ScalarProperty Name="fileID" ColumnName="fileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoiceLogTable">
+            <EntityTypeMapping TypeName="BESModel.invoiceLogTable">
+              <MappingFragment StoreEntitySet="invoiceLogTable">
+                <ScalarProperty Name="newinvoiceDate" ColumnName="newinvoiceDate" />
+                <ScalarProperty Name="invoiceDate" ColumnName="invoiceDate" />
+                <ScalarProperty Name="newamount" ColumnName="newamount" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="newcredit" ColumnName="newcredit" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="newcash" ColumnName="newcash" />
+                <ScalarProperty Name="cash" ColumnName="cash" />
+                <ScalarProperty Name="newbank_id" ColumnName="newbank_id" />
+                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+                <ScalarProperty Name="newexpence_id" ColumnName="newexpence_id" />
+                <ScalarProperty Name="expence_id" ColumnName="expence_id" />
+                <ScalarProperty Name="newstore_id" ColumnName="newstore_id" />
+                <ScalarProperty Name="store_id" ColumnName="store_id" />
+                <ScalarProperty Name="invoiceId" ColumnName="invoiceId" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoiceTable">
+            <EntityTypeMapping TypeName="BESModel.invoiceTable">
+              <MappingFragment StoreEntitySet="invoiceTable">
+                <ScalarProperty Name="taksitSayisi" ColumnName="taksitSayisi" />
+                <ScalarProperty Name="odemeTuruTablosu_id" ColumnName="odemeTuruTablosu_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="invoiceDate" ColumnName="invoiceDate" />
+                <ScalarProperty Name="expenceDescription" ColumnName="expenceDescription" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="cash" ColumnName="cash" />
+                <ScalarProperty Name="expence_id" ColumnName="expence_id" />
+                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+                <ScalarProperty Name="store_id" ColumnName="store_id" />
+                <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="odemeTuruTablosu">
+            <EntityTypeMapping TypeName="BESModel.odemeTuruTablosu">
+              <MappingFragment StoreEntitySet="odemeTuruTablosu">
+                <ScalarProperty Name="odemeTur" ColumnName="odemeTur" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resfundTable">
+            <EntityTypeMapping TypeName="BESModel.resfundTable">
+              <MappingFragment StoreEntitySet="resfundTable">
+                <ScalarProperty Name="resfundCredit" ColumnName="resfundCredit" />
+                <ScalarProperty Name="resfundDate" ColumnName="resfundDate" />
+                <ScalarProperty Name="resfundCash" ColumnName="resfundCash" />
+                <ScalarProperty Name="resfundFiles" ColumnName="resfundFiles" />
+                <ScalarProperty Name="resfundDescription" ColumnName="resfundDescription" />
+                <ScalarProperty Name="resfundType" ColumnName="resfundType" />
+                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="store_id" ColumnName="store_id" />
+                <ScalarProperty Name="refundID" ColumnName="refundID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resfundTypeTable">
+            <EntityTypeMapping TypeName="BESModel.resfundTypeTable">
+              <MappingFragment StoreEntitySet="resfundTypeTable">
+                <ScalarProperty Name="resfundTypeName" ColumnName="resfundTypeName" />
+                <ScalarProperty Name="resfundTypeID" ColumnName="resfundTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roleTable">
+            <EntityTypeMapping TypeName="BESModel.roleTable">
+              <MappingFragment StoreEntitySet="roleTable">
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="storeTable">
+            <EntityTypeMapping TypeName="BESModel.storeTable">
+              <MappingFragment StoreEntitySet="storeTable">
+                <ScalarProperty Name="storeDescription" ColumnName="storeDescription" />
+                <ScalarProperty Name="storeName" ColumnName="storeName" />
+                <ScalarProperty Name="storeCode" ColumnName="storeCode" />
+                <ScalarProperty Name="storeID" ColumnName="storeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BESModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userTable">
+            <EntityTypeMapping TypeName="BESModel.userTable">
+              <MappingFragment StoreEntitySet="userTable">
+                <ScalarProperty Name="cashier_code" ColumnName="cashier_code" />
+                <ScalarProperty Name="user_position" ColumnName="user_position" />
+                <ScalarProperty Name="logoutDate" ColumnName="logoutDate" />
+                <ScalarProperty Name="loginDate" ColumnName="loginDate" />
+                <ScalarProperty Name="isOnline" ColumnName="isOnline" />
+                <ScalarProperty Name="store_id" ColumnName="store_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwInvoiceLog">
+            <EntityTypeMapping TypeName="BESModel.vwInvoiceLog">
+              <MappingFragment StoreEntitySet="vwInvoiceLog">
+                <ScalarProperty Name="bankCode" ColumnName="bankCode" />
+                <ScalarProperty Name="newbankCode" ColumnName="newbankCode" />
+                <ScalarProperty Name="newstoreCode" ColumnName="newstoreCode" />
+                <ScalarProperty Name="storeCode" ColumnName="storeCode" />
+                <ScalarProperty Name="expenceCode" ColumnName="expenceCode" />
+                <ScalarProperty Name="newexpenceCode" ColumnName="newexpenceCode" />
+                <ScalarProperty Name="newinvoiceDate" ColumnName="newinvoiceDate" />
+                <ScalarProperty Name="invoiceDate" ColumnName="invoiceDate" />
+                <ScalarProperty Name="newamount" ColumnName="newamount" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="newcredit" ColumnName="newcredit" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="newcash" ColumnName="newcash" />
+                <ScalarProperty Name="cash" ColumnName="cash" />
+                <ScalarProperty Name="newbank_id" ColumnName="newbank_id" />
+                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+                <ScalarProperty Name="newexpence_id" ColumnName="newexpence_id" />
+                <ScalarProperty Name="expence_id" ColumnName="expence_id" />
+                <ScalarProperty Name="newstore_id" ColumnName="newstore_id" />
+                <ScalarProperty Name="store_id" ColumnName="store_id" />
+                <ScalarProperty Name="invoiceId" ColumnName="invoiceId" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

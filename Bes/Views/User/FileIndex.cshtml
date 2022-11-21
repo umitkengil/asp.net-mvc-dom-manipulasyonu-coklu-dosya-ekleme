@@ -1,0 +1,91 @@
+﻿@using Bes.Models.BesEntity
+@model List<FileTables>
+@{
+    ViewBag.Title = "FileIndex";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Dosyaları Listele</h2>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","User")" class="btn btn-outline-primary btn-md btn-md float-left">
+                    <i class="fas fa-chevron-circle-right"></i>&nbsp; Ana Sayfaya Dön&nbsp;&nbsp;
+                </a>
+                <a href="@Url.Action("InvoiceIndex","User")" class="btn btn-outline-secondary btn-md btn-md float-right">
+                    <i class="fa fa-list"></i>&nbsp;Hareketleri Listele&nbsp;&nbsp;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-md table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mağaza</th>
+                            <th>Kullanıcı Adı</th>
+                            <th>Dosya Adı</th>
+                            <th>Eklenme Tarihi</th>
+                            <th>Silinme Tarihi</th>
+                            <th>İşlemler</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                            <tr>
+                                <td>@m.storeTable.storeCode</td>
+
+                                @if (m.userTable.username == "admin")
+                                {
+                                    <td><label class="text-danger">@m.userTable.username</label></td>
+                                }
+                                else if (m.user_id != @ViewBag.LoginUserId)
+                                {
+                                    <td><label class="text-info">@m.userTable.username</label></td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-success">@m.userTable.username</label></td>
+                                }
+
+                                <td>@m.fileName</td>
+                                <td>@m.AddedDate</td>
+
+
+                                @if (m.DeletedDate is null)
+                                {
+                                    <td><label class="text-primary">Dosya Silinmemiş</label></td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-danger">@string.Format("{0:C0}", m.DeletedDate)</label></td>
+                                }
+
+                                @if (m.user_id == @ViewBag.LoginUserId)
+                                {
+                                    <td style="text-align:center;">
+                                        <a href="/User/EditInvoice/@m.fileID" class="btn btn-success">Güncelle</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-danger">Bu işlemi Gerçekleştiremezsiniz!</label></td>
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

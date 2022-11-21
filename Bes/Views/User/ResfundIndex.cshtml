@@ -1,0 +1,83 @@
+﻿@using Bes.Models.BesEntity
+@model List<refundTable>
+
+@{
+    ViewBag.Title = "İade Listele";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","User")" class="btn btn-outline-primary btn-md btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön&nbsp;&nbsp;
+                </a>
+                <a href="@Url.Action("AddResfund","User")" class="btn btn-outline-secondary btn-md btn-sm float-right">
+                    <i class="fa fa-plus"></i>&nbsp; &nbsp; Yeni İade Ekle
+                </a>
+            </div>
+        </div>
+    </div>
+</div><!-- END column -->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-md table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px;">Mağaza</th>
+                            <th style="width: 10px;">İadeyi Alan</th>
+                            <th style="width: 10px;">İade Tipi</th>
+                            <th style="width: 10px;">Banka Adı</th>
+                            <th style="width: 10px;">İade Nakit</th>
+                            <th style="width: 10px;">İade Kredi/Banka</th>
+                            <th style="width: 10px;">İade Nedeni</th>
+                            <th style="width: 10px;">Hareket Tarihi</th>
+                            <th style="width: 10px;">Satır İşlemi</th>
+                            <th style="width: 10%;">İşlemler</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                            <tr>
+                                <td>@m.storeTable.storeName</td>
+                                <td>@m.userTable.username</td>
+                                <td>@m.refundTypeTable.refundTypeName</td>
+                                <td>@m.bankTable.bankName</td>
+                                <td>@string.Format("{0:C0}", m.refundCash)</td>
+                                <td>@string.Format("{0:C0}", m.refundCredit)</td>
+                                @if (m.refundDescription != null)
+                                {
+                                    <td>@m.refundDescription</td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-danger">Açıklama Girilmemiş</label></td>
+                                }
+                                <td>@Convert.ToDateTime(m.refundDate).ToString("dd/MM/yyyy")</td>
+                                @if (m.user_id == @ViewBag.LoginUserId)
+                                {
+                                    <td style="text-align:center;">
+                                        <a href="/User/EditInvoice/@m.refundID" class="btn btn-success">Güncelle</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-danger">Bu işlemi Gerçekleştiremezsiniz!</label></td>
+                                }
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

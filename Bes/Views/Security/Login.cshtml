@@ -1,0 +1,93 @@
+﻿@model Bes.Models.BesEntity.userTable
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DemiprAPP - Hesap Defterim</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box" @*style="width:460px;"*@>
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <h1><b>DEMİRAPP</b><br>Hesap Defterim</h1>
+            </div>
+            <div class="card-body">
+
+                @if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-danger alert-dismissible">
+                        <h3 style="text-align:center;"><b><i class="icon fas fa-ban"></i> HATA!</b></h3><p style="text-align:center;">@ViewBag.Message</p>
+                    </div>
+                }
+                @using (Html.BeginForm("Login", "Security", FormMethod.Post, new { autocomplete = "off" }))
+                { 
+
+                    <div class="input-group mb-3">
+                        @Html.TextBoxFor(u => u.username,
+                            new
+                            {
+                                @class = "form-control",
+                                @type = "text",
+                                @placeholder = "Kullanıcı Adı Giriniz",
+                                @required = "required"
+                            })
+
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        @Html.TextBoxFor(u => u.password,
+                            new
+                            {
+                                @class = "form-control",
+                                @type = "password",
+                                @placeholder = "Şifrenizi Giriniz",
+                                @required = "required"
+                            })
+
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                }
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/Content/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/dist/js/adminlte.min.js"></script>
+</body>
+</html>

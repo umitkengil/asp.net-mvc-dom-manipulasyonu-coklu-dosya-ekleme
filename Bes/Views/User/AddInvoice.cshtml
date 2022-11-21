@@ -1,0 +1,526 @@
+﻿
+@using Bes.Models.BesEntity
+@model invoiceTable
+@{
+    ViewBag.Title = "Hareket Ekle";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<script>
+    let index = 1;
+
+    function addRow() {
+        var d1 = document.getElementById("txtstore").value;
+        var d2 = document.getElementById("txtexpence").value;
+        var d3 = document.getElementById("txtbank").value;
+        var d4 = document.getElementById("txtpesin").value;
+        var d5 = document.getElementById("txtTaksit").value
+        var d6 = document.getElementById("txtcash").value;
+        var d7 = document.getElementById("txtcredit").value;
+        var d8 = document.getElementById("txtamount").value;
+        var d9 = document.getElementById("txtexpenceDescription").value;
+        var d10 = document.getElementById("txtdate").value;
+
+        if (d1 != "" && d2 != "" && d3 != "" && d4 != "" && d5 != "" && d6 != "" || d6 == "" && d7 != "" || d7 == "" && d8 != "" || d8 == "" && d9!="" || d9=="" && d10!="")
+        {
+            var table = document.getElementById("datatbl");
+            table.className = "table table-bordered table-hover col-sm";
+            var newrow = table.insertRow(table.rows.length);
+
+            var cell1 = newrow.insertCell(0);
+            var t1 = document.getElementById("txtstore").value;
+            var skillsSelect = document.getElementById("txtstore");
+            var selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
+            cell1.innerHTML = selectedText;
+
+            var cell2 = newrow.insertCell(1);
+            var t2 = document.getElementById("txtexpence").value;
+            var skillsSelect2 = document.getElementById("txtexpence");
+            var selectedText2 = skillsSelect2.options[skillsSelect2.selectedIndex].text;
+            cell2.innerHTML = selectedText2;
+
+            var cell3 = newrow.insertCell(2);
+            var t3 = document.getElementById("txtbank").value;
+            var skillsSelect3 = document.getElementById("txtbank");
+            var selectedText3 = skillsSelect3.options[skillsSelect3.selectedIndex].text;
+            cell3.innerHTML = selectedText3;
+
+            var cell4 = newrow.insertCell(3);
+            var t84 = document.getElementById("txtpesin").value;
+            var skillsSelect4 = document.getElementById("txtpesin");
+            var selectedText4 = skillsSelect4.options[skillsSelect4.selectedIndex].text;
+            cell4.innerHTML = selectedText4;
+
+            //var cell5 = newrow.insertCell(4);
+            //var t5 = document.getElementById("txttaksit").value;
+            //var skillsSelect5 = document.getElementById("txttaksit");
+            //var selectedText5 = skillsSelect5.options[skillsSelect5.selectedIndex].text;
+            //cell5.innerHTML = selectedText5;
+
+            var cell5 = newrow.insertCell(4);
+            var t5 = document.getElementById("txtTaksit").value;
+            if (t5 == "") {
+                t5 = 0;
+                cell5.innerHTML = t5;
+            }
+            else {
+                cell5.innerHTML = t5;
+            }
+
+            var cell6 = newrow.insertCell(5);
+            var t6 = document.getElementById("txtcash").value;
+            if (t6 == "")
+            {
+                t6 = 0;
+                cell6.innerHTML = t6;
+            }
+            else
+            {
+                cell6.innerHTML = t6;
+            }
+
+            var cell7 = newrow.insertCell(6);
+            var t7 = document.getElementById("txtcredit").value;
+            if (t7 == "")
+            {
+                t7 = 0;
+                cell7.innerHTML = t7;
+            }
+            else
+            {
+                cell7.innerHTML = t7;
+            }
+           
+
+            var cell8 = newrow.insertCell(7);
+            var t8 = document.getElementById("txtamount").value;
+            if (t8 == "")
+            {
+                t8 = 0;
+                cell8.innerHTML = t8;
+            }
+            else
+            {
+                cell8.innerHTML = t8;
+            }
+
+            var cell9 = newrow.insertCell(8);
+            var t9 = document.getElementById("txtexpenceDescription").value;
+            cell9.innerHTML = t9;
+
+            var cell10 = newrow.insertCell(9);
+            var t10 = document.getElementById("txtdate").value;
+            cell10.innerHTML = t10;
+
+            var cell11 = newrow.insertCell(10);
+            var t11 = document.createElement("button");
+            t11.innerHTML = "İptal Et";
+            t11.id = index + "_btn";
+            t11.className = "form-control btn btn-md btn-outline-primary";
+            t11.setAttribute("onclick", "Remove(this);");
+            cell11.appendChild(t11);
+
+            document.getElementById("txtstore").value = "";
+            document.getElementById("txtexpence").value = "";
+            document.getElementById("txtbank").value = "";
+            document.getElementById("txtcash").value = "";
+            document.getElementById("txtcredit").value = "";
+            document.getElementById("txtamount").value = "";
+            document.getElementById("txtexpenceDescription").value = "";
+            document.getElementById("txtpesin").value = "";
+            document.getElementById("txtTaksit").value = "";
+            document.getElementById("txtdate").value = "";
+
+            index++;
+        }
+    }
+
+    function addDatabase() {
+
+        $("#datatbl TBODY TR").each(function () {
+             var row = $(this);
+             var data2 = [{
+                 "store_id": row.find("TD").eq(0).html(),
+                 "expence_id": row.find("TD").eq(1).html(),
+                 "bank_id": row.find("TD").eq(2).html(),
+                 "odemeTuruTablosu_id": row.find("TD").eq(3).html(),
+                 "taksitSayisi": row.find("TD").eq(4).html(),
+                 "cash": row.find("TD").eq(5).html(),
+                 "credit": row.find("TD").eq(6).html(),
+                 "amonut": row.find("TD").eq(7).html(),
+                 "expenceDescription": row.find("TD").eq(8).html(),
+                 "invoiceDate": row.find("TD").eq(9).html(),
+            }];
+                $.ajax({
+                    url:'@Url.Action("AddInvoice", "User")',
+                    data: JSON.stringify(data2),
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    dataType: 'json',
+                    success: function (result) {
+
+                    }
+            });
+        });
+        window.location = "@Url.Action("Index", "User")";
+    }
+
+</script>
+
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</h5>
+    <ul>
+        <li>Tüm Alanlar Doldurulmalıdır(***)</li>
+        <li>ödeme türü Peşin Yapılırsa Taksit ve Gelir Kredi Hareket Devre Dışı Kalır</li>
+        <li>Taksit seçilirse Gelir Nakit Hareket Devre Dışı Kalır</li>
+        <li>Taksit sayısı 1-12 arası olmalıdır</li>
+        <li>Masraf Adı Seçiminde (Masrafsız işlem) seçilirse Toplam Masraf Devre Dışı Kalır</li>
+        <li>Masraf Adı menüsünden herhangi bir masraf seçilirse (Gelir Nakit Hareket ve Gelir Kredi) Devre Dışı Kalır</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","User")" class="btn btn-outline-primary btn-md btn-md float-left">
+                    <i class="fas fa-chevron-circle-right"></i>&nbsp; Ana Sayfaya Dön&nbsp;&nbsp;
+                </a>
+                <a href="@Url.Action("InvoiceIndex","User")" class="btn btn-outline-secondary btn-md btn-md float-right">
+                    <i class="fa fa-list"></i>&nbsp;Hareketleri Listele&nbsp;&nbsp;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Mağaza Adı</label>
+                    @Html.DropDownListFor(m => m.storeTable.storeID, (List<SelectListItem>)ViewBag.magazaKodu, "Seçiniz",
+                       new
+                            {
+                           @id = "txtstore",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Masraf Adı</label>
+                    @Html.DropDownListFor(m => m.expenceTable.expenceID, (List<SelectListItem>)ViewBag.masrafKodu, "Seçiniz",
+                       new
+                            {
+                           @id = "txtexpence",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Banka Adı</label>
+                    @Html.DropDownListFor(m => m.bankTable.bankID, (List<SelectListItem>)ViewBag.bankaKodu, "Seçiniz",
+                       new
+                            {
+                           @id = "txtbank",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Ödeme Türü</label>
+                    @Html.DropDownListFor(m => m.odemeTuruTablosu.ID, (List<SelectListItem>)ViewBag.odemeTipPesin, "Seçiniz",
+                       new
+                       {
+                           @id = "txtpesin",
+                           @class = "form-control"
+                       })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Taksit Sayısı</label>
+                    @Html.TextBoxFor(m => m.taksitSayisi,
+                                            new
+                                                 {
+                                                @id = "txtTaksit",
+                                                @class = "form-control",
+                                                @type = "number",
+                                                @min = "1",
+                                                @max = "12",
+                                                @onkeyinput = "validity.valid||(value='');",
+                                                @onkeypress = "isNumber(event)",
+                                                @placeholder = "Taksit Sayısını giriniz.."
+                                            })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Gelir Nakit Hareket</label>
+                    @Html.TextBoxFor(m => m.cash,
+                        new
+                             {
+                            @id = "txtcash",
+                            @class = "form-control",
+                            @type = "number",
+                            @min = "0",
+                            @step = "0.1",
+                            @onkeyinput = "validity.valid||(value='');",
+                            @onkeypress = "isNumber(event)",
+                            @placeholder = "Tutarı giriniz.."
+                        })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Gelir Kredi Hareket</label>
+                    @Html.TextBoxFor(m => m.credit,
+                      new
+                           {
+                          @id = "txtcredit",
+                          @class = "form-control",
+                          @type = "number",
+                          @min = "0",
+                          @step = "0.1",
+                          @onkeyinput = "validity.valid||(value='');",
+                          @onkeypress = "isNumber(event)",
+                          @placeholder = "Tutarı giriniz.."
+                      })
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Toplam Masraf</label>
+                    @Html.TextBoxFor(m => m.amount,
+                        new
+                             {
+                            @id = "txtamount",
+                            @class = "form-control",
+                            @type = "number",
+                            @min = "0",
+                            @step = "0.1",
+                            @onkeyinput = "validity.valid||(value='');",
+                            @onkeypress = "isNumber(event)",
+                            @placeholder = "Tutarı giriniz.."
+                        })
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    @Html.TextBoxFor(m => m.expenceDescription,
+                        new
+                             {
+                            @id = "txtexpenceDescription",
+                            @class = "form-control",
+                            @type = "text",
+                            @placeholder = "Açıklama giriniz.."
+                        })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Hareket Tarihi</label>
+                    @Html.TextBoxFor(m => m.invoiceDate, "{0:yyyy-MM-dd}",
+                        new
+                        {
+                            @id = "txtdate",
+                            @class = "form-control",
+                            @type = "date"
+                        })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-outline-success" style=" width: 20%; float: right; " onclick="addRow()">
+                    <i class="fas fa-plus"></i>&nbsp; Tabloya Ekle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatbl" class="table table-bordered table-hover col-sm">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px;">Mağaza</th>
+                            <th style="width: 10px;">Masraf Adı</th>
+                            <th style="width: 10px;">Banka</th>
+                            <th style="width: 10px;">Ödeme Türü</th>
+                            <th style="width: 10px;">Taksit Sayısı</th>
+                            <th style="width: 10px;">Nakit</th>
+                            <th style="width: 10px;">Kredi</th>
+                            <th style="width: 10px;">Masraf</th>
+                            <th style="width: 10px;">Masraf Açıklama</th>
+                            <th style="width: 10px;">Hareket Tarihi</th>
+                            <th style="width: 10px;">Satır İşlemi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="col-md-12 col-sm-12">
+                        <tr id="Addedrow">
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-outline-success pull-right" style="width: 125px; float: right;" onclick="addDatabase()">
+                            <i class="fas fa-save"></i>&nbsp; Kaydet
+                        </button>
+                        <a href="@Url.Action("Index", "User")" type="reset" class="btn btn-outline-danger pull-left" style="width: 125px; float: left;">
+                            <i class="fas fa-times-circle"></i>&nbsp; İptal Et
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/dist/js/jquery-3.6.0.js"></script>
+
+<script>
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        let charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+            evt.preventDefault();
+        } else {
+            return true;
+        }
+    }
+    $(function () {
+        $('.datepicker').datepicker();
+    });
+    $(function () {
+        $(".example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "excel", "pdf", "print"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    });
+    function Remove(button) {
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        if (confirm("Satırı iptal etmek istiyor musunuz ?")) {
+            var table = $("#datatbl")[0];
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+
+
+    $(document).ready(function () {
+        window.confirm("Doldurulması Zorunlu Alanlar: Mağaza Adı, Banka Adı, Masraf Adı, Hareket Tarihi");
+
+        $(document).on('change', '#txtpesin', function () {
+            var odemeTur = $(this).val();
+
+            $(this);
+            if (odemeTur == 1) {
+                $('#txtTaksit').prop('disabled', true);
+                $('#txtTaksit').val();
+                $('#txtTaksit').change(0);
+                $('#txtcredit').prop('disabled', true);
+                $('#txtcredit').val('').change(0);
+
+            } else if (odemeTur == 2) {
+                $('#txtTaksit').prop('disabled', false);
+                $('#txtcash').prop('disabled', true);
+                $('#txtcash').val('').change(0);
+                var taksit = document.getElementById('txtTaksit').value;
+                if (taksit < 0 && taksit == null) {
+                    alert("Taksit değeri 0'dan Küçük olamaz boş bırakılamaz...Girilen değer: ", taksit ? null : 'boş bırakılamaz');
+                    taksit.value = 0;
+
+                } else if (taksit > 12) {
+                    alert("Taksit değeri 12'den büyük olamaz...Girilen değer: ", taksit);
+
+                }
+                $('#txtamount').prop('disabled', false);
+            }
+            else {
+                $('#txtTaksit').prop('disabled', false);
+                $('#txtcredit').prop('disabled', false);
+                $('#txtcash').prop('disabled', false);
+            }
+        });
+        $(document).on('change', '#txtexpence', function () {
+            //var masraf = $(this).val();
+            var masraf = document.getElementById("txtexpence").value;
+            $(this);
+            if (masraf == 1) {
+                $('#txtcash').prop('disabled', false);
+                $('#txtcash').val('');
+                $('#txtcash').change(0);
+                $('#txtcredit').prop('disabled', false);
+                $('#txtcredit').val('');
+                $('#txtcredit').change(0);
+                $('#txtamount').prop('disabled', true);
+
+            } else if (masraf != 1) {
+                $('#txtcash,#txtcredit').prop('disabled', true);
+                $('#txtcash').val('');
+                $('#txtcash').change(0);
+                $('#txtcredit').val('');
+                $('#txtcredit').change(0);
+                $('#txtamount').prop('disabled', false);
+
+            }else if (masraf == '') {
+                $('#txtcash,#txtcredit,#txtamount').prop('disabled', true);
+            }
+
+        });
+
+        //var bank = document.getElementById("txtbank").value;
+        //var store = document.getElementById("txtstore").value;
+        //var expence = document.getElementById("txtexpence").value;
+        //var date = document.getElementById("txtdate").value;
+
+        //if (bank == "" && bank == null) {
+        //    alert("Banka Adı Boş Bırakılamaz");
+        //}
+        //else if (store == "" && store == null) {
+        //    alert("Mağaza Adı Boş Bırakılamaz");
+        //}
+        //else if (expence == "" && expence == null) {
+        //    alert("Masraf Adı Boş Bırakılmaz");
+        //}
+        //else if (date == "" && date == null) {
+        //    alert("Hareket Tarihi Boş Bırakılamaz");
+        //}
+        //else {
+        //    alert("Beklenilmeyen hata... Lütfen Sayfayı tekrardan açıp, ekleme yapın");
+        //}
+    });
+
+</script>
+
+
+
+

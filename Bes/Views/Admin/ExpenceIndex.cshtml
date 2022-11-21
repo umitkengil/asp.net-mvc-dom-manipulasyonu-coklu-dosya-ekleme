@@ -1,0 +1,67 @@
+﻿@using Bes.Models.BesEntity
+@model List<expenceTable>
+@{
+    ViewBag.Title = "Masraf Listele";
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</h5>
+    <ul>
+        <li>Tüm Alanlar Doldurulmalıdır</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","Admin")" class="btn btn-outline-primary btn-md btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön
+                </a>
+                <a href="@Url.Action("AddExpence","Admin")" class="btn btn-outline-secondary btn-md btn-sm float-right">
+                    <i class="fa fa-plus"></i>&nbsp; Yeni Masraf Ekle
+                </a>
+            </div>
+        </div>
+    </div><!-- END column -->
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-sm table-striped">
+                    <thead>
+                        <tr>
+                            @*<th style="width: 5px;">ID</th>*@
+                            <th style="width: 200px;">Masraf Kodu</th>
+                            <th style="width: 300px;">Masraf Açıklama</th>
+                            <th style="width: 10%;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                            <tr>
+                                @*<td>#@m.expenceID</td>*@
+                                <td>@m.expenceCode</td>
+                                <td>@m.expenceDescription</td>
+                                <td style="text-align:center;">
+                                    <a href="/Admin/EditExpence/@m.expenceID" class="btn btn-success">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,110 @@
+﻿@model List<Bes.Models.BesEntity.vwInvoiceLog>
+@{
+    ViewBag.Title = "Log İşlemleri";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</h5>
+    <ul>
+        <li>Bu Alanda Hem <span class="text-primary text-bold">Mağaza Kullanıcılarının</span> hem de <span class="text-primary text-bold">Admin</span> 'in Yaptığı Tüm Değişiklikler Gösterilir</li>
+
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","Admin")" class="btn btn-outline-primary btn-md btn-md">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön
+                </a>
+            </div>
+        </div>
+    </div><!-- END column -->
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>Güncelleme Yapan Kullanıcı</th>
+                            <th>Güncelleme Zamanı</th>
+                            <th>Mağaza Kodu</th>
+                            <th>Eski Banka Kodu</th>
+                            <th>Yeni Banka Kodu</th>
+                            <th>Eski Masraf Kodu</th>
+                            <th>Yeni Masraf Kodu</th>
+                            <th>Eski Nakit Tutar</th>
+                            <th>Yeni Nakit Tutar</th>
+                            <th>Eski Banka/Kredi Tutar</th>
+                            <th>Yeni Banka/Kredi Tutar</th>
+                            <th>Eski Masraf Tutar</th>
+                            <th>Yeni Masraf Tutar</th>
+                            <th>Güncelleme Öncesi Tarih</th>
+                            <th>Güncelleme Sonrası Tarih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                        <tr>
+                            <td>@m.UserName</td>
+                            <td>@m.UpdateTime</td>
+                            <td>@m.storeCode</td>
+                            <td>@m.bankCode</td>
+                            <td>@m.newbankCode</td>
+                            <td>@m.expenceCode</td>
+                            <td>@m.newexpenceCode</td>
+                            @if (m.cash != null)
+                            {
+                                <td>@m.cash</td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Nakit Tutarı Girilmemiş</label></td>
+                            }
+                            @if (m.newcash != null)
+                            {
+                                <td>@m.newcash</td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Yeni Nakit Tutarı Girilmemiş</label></td>
+                            }
+                            @if (m.credit != null)
+                            {
+                                <td>@m.credit</td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Kredi Tutarı Girilmemiş</label></td>
+                            }
+                            @if (m.newcredit != null)
+                            {
+                                <td>@m.newcredit</td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Yeni Kredi Tutarı Girilmemiş</label></td>
+                            }
+
+                            <td>@m.amount</td>
+                            <td>@m.newamount</td>
+                            <td>@m.invoiceDate</td>
+                            <td>@m.newinvoiceDate</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,55 @@
+﻿@model List<Bes.Models.Rapor1>
+
+<style>
+    #stateColor {
+        border-radius: 5px;
+        width: 100px;
+        text-align: center;
+    }
+    #txtCenter {
+        text-align: center !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mağaza Adı</th>
+                            <th>Nakit</th>
+                            <th>Kredi/Banka</th>
+                            <th>Masraf</th>
+                            <th style="width:15%">Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.magazaAdi</td>
+                                <td>@string.Format("{0:C0}", item.nakit)</td>
+                                <td>@string.Format("{0:C0}", item.kart)</td>
+                                <td>@string.Format("{0:C0}", item.masraf)</td>
+                                @if (item.durum < 0)
+                                {
+                                    <td id="txtCenter"><label id="stateColor" class="p-1 bg-danger text-white">@string.Format("{0:C0}",item.durum )</label></td>
+                                }
+                                @if (item.durum > 0)
+                                {
+                                    <td id="txtCenter"><label id="stateColor" class="p-1 mb-2 bg-success text-white">@string.Format("{0:C0}", item.durum)</label></td>
+                                }
+                                @if (item.durum == 0)
+                                {
+                                    <td id="txtCenter"><label id="stateColor" class="p-1 mb-2 bg-secondary text-white">@string.Format("{0:C0}", item.durum)</label></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

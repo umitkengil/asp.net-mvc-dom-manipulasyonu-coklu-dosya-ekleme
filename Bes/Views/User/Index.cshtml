@@ -1,0 +1,216 @@
+﻿@using Bes.Models.BesEntity
+@model IEnumerable<invoiceTable>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<style>
+    .item {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5 style="text-align:center;"><b><i class="icon fas fa-exclamation-triangle"></i>UYARI!!!!!</b> </h5>
+    <ul>
+        <li style="text-align:center;list-style:none;">Çıkış Yapmak İçin Sol Menude Yer Alan <b><span class="text-danger">ÇIKIŞ YAP </span></b>Butonunu Kullanınız!!!</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-xl-12">
+        <div class="alert alert-success alert-dismissible">
+            <h4>@ViewBag.magazaAdi Mağazası <span style="padding-left:50%;color:white;">Giriş Yapan Kullanıcı: <span style="color: #070cf9;">@HttpContext.Current.User.Identity.Name</span> </span></h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 col-xs-12">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <p>Mağaza Kullanıcı Sayısı</p>
+                <h3>@ViewBag.kullaniciSayisi</h3>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <p>Nakit Gelirler</p>
+                <h3>@string.Format("{0:C0}", ViewBag.nakitGelirler)</h3>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <!-- small box -->
+        <div class="small-box bg-fuchsia">
+            <div class="inner">
+                <p>Kredi Gelirler</p>
+                <h3>@string.Format("{0:C0}", ViewBag.krediGelirler)</h3>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-12">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <p>Toplam Masraf</p>
+                <h3>@string.Format("{0:C0}", ViewBag.toplamMasraf)</h3>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="btn-toolbar  col-md-12 col-xs-12">
+                    <div class="item">
+                        <a href="@Url.Action("AddFiles","User")" class="btn btn-primary btn-md">
+                            <i class="fa fa-plus"></i>
+                            &nbsp;Yeni Dosya Ekle
+                        </a>&nbsp;
+                    </div>
+                    <br /><br />
+
+                    <div class="item">
+                        <a href="@Url.Action("AddInvoice","User")" class="btn btn-danger btn-md ">
+                            <i class="fa fa-plus"></i>
+                            &nbsp;Yeni Hareket Ekle
+                        </a>&nbsp;
+                    </div>
+                    <br /><br />
+
+                    <div class="item">
+                        <a href="@Url.Action("InvoiceIndex","User")" class="btn btn-warning btn-md ">
+                            <i class="fa fa-list"></i>
+                            &nbsp;Hareketleri Görüntüle
+                        </a>&nbsp;
+                    </div>
+
+                    <div class="item">
+                        <a href="@Url.Action("AddResfund","User")" class="btn btn-success btn-md ">
+                            <i class="fa fa-plus"></i>
+                            &nbsp;Yeni İade Ekle
+                        </a>&nbsp;
+                    </div>
+                    <br /><br />
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-md table-striped">
+                    <thead>
+                        <tr>
+                            <th>Kullanıcı Adı</th>
+                            <th>Unvanı</th>
+                            <th>Masraf Adı</th>
+                            <th>Banka Adı</th>
+                            <th>Nakit</th>
+                            <th>Kredi/Banka</th>
+                            <th>Ödeme Yöntemi</th>
+                            <th>Taksit</th>
+                            <th>Masraf</th>
+                            <th>Masraf Açıklama</th>
+                            <th>Hareket Tarihi</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                            <tr>
+
+                                @if (m.userTable.username == "admin")
+                                {
+                                    <td><label class="text-danger">@m.userTable.username</label></td>
+                                }
+                                else if (m.user_id != @ViewBag.LoginUserId)
+                                {
+                                    <td><label class="text-info">@m.userTable.username</label></td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-success">@m.userTable.username</label></td>
+                                }
+                                <td>@m.userTable.user_position</td>
+                                <td>@m.expenceTable.expenceDescription</td>
+                                <td>@m.bankTable.bankName</td>
+
+
+                                @if (m.cash != 0)
+                                {
+                                    <td><label class="text-primary">@string.Format("{0:C0}", m.cash)</label></td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-danger">@string.Format("{0:C0}", m.cash)</label></td>
+                                }
+
+                                @if (m.credit != 0)
+                                {
+                                    <td><label class="text-primary">@string.Format("{0:C0}", m.credit)</label></td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-danger">@string.Format("{0:C0}", m.credit)</label></td>
+                                }
+                                <td>@m.odemeTuruTablosu.odemeTur</td>
+                                <td>@m.taksitSayisi</td>
+                                @if (m.amount != 0)
+                                {
+                                    <td><label class="text-danger">@string.Format("{0:C0}", m.amount)</label></td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-success">@string.Format("{0:C0}", m.amount)</label></td>
+                                }
+
+                                @if (m.expenceDescription != null)
+                                {
+                                    <td>@m.expenceDescription</td>
+                                }
+                                else
+                                {
+                                    <td><label class="text-danger">Açıklama Girilmemiş</label></td>
+                                }
+
+                                <td>@Convert.ToDateTime(m.invoiceDate).ToString("dd/MM/yyyy")</td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

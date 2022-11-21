@@ -1,0 +1,271 @@
+﻿@using Bes.Models.BesEntity
+@model userTable
+@{
+    ViewBag.Title = "AddUsers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script>
+    let index = 1;
+
+    function addRow() {
+
+        var d1 = document.getElementById("txtstore").value;
+        var d2 = document.getElementById("txtusername").value;
+        var d3 = document.getElementById("txtpassword").value;
+        var d4 = document.getElementById("txtposition").value;
+        var d5 = document.getElementById("txtrole").value;
+
+
+        if (d1 != "" && d2 != "" && d3 != "" && d4 != "" && d5!="") {
+
+                var table = document.getElementById("datatbl");
+                var newrow = table.insertRow(table.rows.length);
+
+                var cell1 = newrow.insertCell(0);
+                var t1 = document.getElementById("txtstore").value;
+                var skillsSelect = document.getElementById("txtstore");
+                var selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
+                cell1.innerHTML = selectedText;
+
+                var cell2 = newrow.insertCell(1);
+                var t2 = document.getElementById("txtusername").value;
+                cell2.innerHTML = t2;
+
+                var cell3 = newrow.insertCell(2);
+                var t3 = document.getElementById("txtpassword").value;
+                cell3.innerHTML = t3;
+
+                var cell4 = newrow.insertCell(3);
+                var t4 = document.getElementById("txtposition").value;
+                cell4.innerHTML = t4;
+
+                var cell5 = newrow.insertCell(4);
+                var t5 = document.getElementById("txtrole").value;
+                var skillsSelect = document.getElementById("txtrole");
+                var selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
+                cell5.innerHTML = selectedText;
+
+                var cell6 = newrow.insertCell(5);
+                var t6 = document.createElement("button");
+                t6.innerHTML = "İptal Et";
+                t6.id = index + "_btn";
+                t6.className = "form-control btn btn-md btn-outline-primary";
+                t6.setAttribute("onclick", "Remove(this);");
+                cell6.appendChild(t6);
+
+                document.getElementById("txtstore").value = "";
+                document.getElementById("txtusername").value = "";
+                document.getElementById("txtpassword").value = "";
+                document.getElementById("txtrole").value = "";
+                document.getElementById("txtposition").value = "";
+
+                index++;
+        }
+    }
+
+    function addDatabase() {
+
+        $("#datatbl TBODY TR").each(function () {
+             var row = $(this);
+             var data_user = [{
+                 "store_id": row.find("TD").eq(0).html(),
+                 "username": row.find("TD").eq(1).html(),
+                 "password": row.find("TD").eq(2).html(),
+                 "user_position": row.find("TD").eq(3).html(),
+                 "role_id": row.find("TD").eq(4).html(),
+
+            }];
+
+                $.ajax({
+                    url:'@Url.Action("AddUsers", "Admin")',
+                    data: JSON.stringify(data_user),
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    dataType: 'json',
+                    success: function (result) {
+                            window.location = "@Url.Action("UsersIndex", "Admin")";
+                    }
+            });
+        });
+
+    }
+
+</script>
+
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5 style="text-align:center;"><b><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</b></h5>
+    <ul>
+        <li style="text-align:center;list-style:none;">Tüm Alanlar Doldurulmalıdır</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+
+                <a href="@Url.Action("Index","Admin")" class="btn btn-outline-primary btn-md btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön
+                </a>
+                <a href="@Url.Action("UsersIndex","Admin")" class="btn btn-outline-secondary btn-md btn-sm float-right">
+                    <i class="fa fa-list"></i>&nbsp; Kullanıcı Listesi
+                </a>
+            </div>
+        </div>
+    </div><!-- END column -->
+</div>
+<br />
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Mağaza Kodu</label>
+                    @Html.DropDownListFor(m => m.storeTable.storeID, (List<SelectListItem>)ViewBag.magazaKodu, "Seçiniz",
+                       new
+                            {
+                           @id = "txtstore",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Kullanıcı Adı</label>
+                    @Html.TextBoxFor(m => m.username,
+                       new
+                            {
+                           @id = "txtusername",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Kullanıcı Şifre</label>
+                    @Html.TextBoxFor(m => m.password,
+                       new
+                            {
+                           @id = "txtpassword",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Unvanı</label>
+                    @Html.TextBoxFor(m => m.user_position,
+                       new
+                            {
+                           @id = "txtposition",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Kullanıcı Rolü</label>
+                    @Html.DropDownListFor(m => m.roleTable.roleID, (List<SelectListItem>)ViewBag.role, "Seçiniz",
+                        new
+                             {
+                            @id = "txtrole",
+                            @class = "form-control",
+                            required = "required"
+                        })
+
+                    @*@Html.TextBoxFor(m => m.roleTable.roleName,
+                new
+                     {
+                    @id = "txtrole",
+                    @class = "form-control",
+                    required = "required"
+                })*@
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-outline-success pull-right" onclick="addRow()">
+                    <i class="fas fa-plus"></i>&nbsp; Tabloya Ekle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+
+                <table id="datatbl" class="table table-bordered table-hover col-sm">
+                    <thead>
+                        <tr>
+                            <th style="width:100px;">Mağaza Kodu</th>
+                            <th style="width:100px;">Kullanıcı Adı</th>
+                            <th style="width:100px;">Kullanıcı Şifre</th>
+                            <th style="width:100px;">Kullanıcı Unvanı</th>
+                            <th style="width:100px;">Kullanıcı Tanımı</th>
+                            <th style="width:100px;">Satır İşlemi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="col-sm-12">
+                        <tr id="Addedrow">
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-outline-success pull-right" style="width: 125px; float: right;" onclick="addDatabase()">
+                            <i class="fas fa-save"></i>&nbsp; Kaydet
+                        </button>
+                        <a href="@Url.Action("Index", "Admin")" type="reset" class="btn btn-outline-danger pull-left" style="width: 125px; float: left;">
+                            <i class="fas fa-times-circle"></i>&nbsp; İptal Et
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        let charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+            evt.preventDefault();
+        } else {
+            return true;
+        }
+    }
+    $(function () {
+        $('.datepicker').datepicker();
+    });
+
+    function Remove(button) {
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        if (confirm("Satırı iptal etmek istiyor musunuz ?")) {
+            var table = $("#datatbl")[0];
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+</script>
+
+
+

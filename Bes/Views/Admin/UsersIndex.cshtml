@@ -1,0 +1,60 @@
+﻿@using Bes.Models.BesEntity
+@model List<userTable>
+@{
+    ViewBag.Title = "Kullanıcı Listesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","Admin")" class="btn btn-outline-primary btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön
+                </a>
+                <a href="@Url.Action("AddUsers","Admin")" class="btn btn-outline-secondary btn-sm float-right">
+                    <i class="fa fa-plus"></i>&nbsp; Yeni Kullanıcı Ekle
+                </a>
+            </div>
+        </div>
+    </div><!-- END column -->
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 150px;">Mağaza Adı</th>
+                            <th style="width: 100px;">Kullanıcı Adı</th>
+                            <th style="width: 100px;">Kullanıcı Şifre</th>
+                            <th style="width: 100px;">Kullanıcı Unvanı</th>
+                            <th style="width: 100px;">Kullanıcı Rolü</th>
+                            <th style="width: 10%;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                            <tr>
+                                <td>@m.storeTable.storeName</td>
+                                <td>@m.username</td>
+                                <td>@m.password</td>
+                                <td>@m.user_position</td>
+                                <td>@m.roleTable.roleName</td>
+                                <td style="text-align:center;">
+                                    <a href="/Admin/EditUsers/@m.userID" class="btn btn-success">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>
+

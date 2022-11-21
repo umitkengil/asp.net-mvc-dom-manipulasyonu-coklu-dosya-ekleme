@@ -1,0 +1,76 @@
+﻿@model Bes.Models.BesEntity.bankTable
+@{
+    ViewBag.Title = "Banka Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5 style="text-align:center;"><b><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</b></h5>
+    <ul>
+        <li style="text-align:center;list-style:none;">Tüm Alanlar Doldurulmalıdır</li>
+    </ul>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","Admin")" class="btn btn-outline-primary btn-md btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön
+                </a>
+                <a href="@Url.Action("BankIndex","Admin")" class="btn btn-outline-secondary btn-md btn-sm float-right">
+                    <i class="fa fa-list"></i>&nbsp; Banka Listesi
+                </a>
+            </div>
+        </div>
+    </div><!-- END column -->
+</div>
+
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("AddBank", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Banka Kodu</label>
+                        @Html.TextBoxFor(m => m.bankCode, new { @class = "form-control", @required = "required" })
+                        @*<input type="text" class="form-control" name="storeCode" placeholder="Mağaza Kodu" />*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Banka Adı</label>
+                        @Html.TextBoxFor(m => m.bankName, new { @class = "form-control", @required = "required" })
+                        @*<input type="text" class="form-control" name="storeName" placeholder="Mağaza Adı" />*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        @Html.TextAreaFor(m => m.bankDescription, new { @class = "form-control" })
+                        @*<textarea class="form-control" rows="10" placeholder="Açıklama"></textarea>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-outline-success pull-right" style="width:125px;float:left;">
+                        <i class="fas fa-save"></i>&nbsp; Kaydet
+                    </button>
+                    <a href="@Url.Action("Index", "Admin")" type="reset" class="btn btn-outline-danger pull-left" style="width:125px;float:right;">
+                        <i class="fas fa-times-circle"></i>&nbsp; İptal Et
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

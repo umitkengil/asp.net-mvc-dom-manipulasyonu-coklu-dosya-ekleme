@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beş Hazır Giyim</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/fontawesome-free/css/all.min.css")">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css")">
+    <link href="@Url.Content("~/Scripts/dropzone/dropzone.min.css")" rel="stylesheet" />
+    <!-- summernote -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/summernote/summernote-bs4.min.css")">
+    <!-- SimpleMDE -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/simplemde/simplemde.min.css")">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/daterangepicker/daterangepicker.css")">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugins/datatables-buttons/css/buttons.bootstrap4.min.css")">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/dist/css/adminlte.min.css")">
+
+    @*<script>
+
+        window.onbeforeunload = function () {
+            deneme();
+            return 'Safya kapatılsın mı ?';
+        }
+
+        function deneme(a) {
+            console.log('çalıştı...');
+            $.ajax({
+                url: '/User/LogoutJS',
+                type: 'POST',
+
+            });
+        }
+
+
+    </script>*@
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="@Url.Content("~/Content/dist/img/user.jpg")" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block"><b style="color:red;font-size:1.5em;padding-left:5px;">@HttpContext.Current.User.Identity.Name</b></a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","User")" class="nav-link active">
+                                <i class="nav-icon fas fa-store-alt"></i>
+                                <p>Mağaza</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-database"></i>
+                                <p>Hareketler<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AddInvoice","User")" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Hareket Ekle</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("InvoiceIndex","User")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Hareketleri Görüntüle</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-arrow-right"></i>
+                                <p>İadeler<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AddResfund","User")" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>İade Ekle</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("ResfundIndex","User")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>İadeleri Görüntüle</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-file-archive"></i>
+                                <p> Dosya İşlemleri<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("AddFiles","User")" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dosya Ekle</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("FileIndex","User")" class="nav-link ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dosyaları Listele</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-fire"></i>
+                                <p> Gün Sonu İşlemleri<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("gunSonuGelir","User")" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Gün Sonu Gelirleri</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("gunSonuGider","User")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Gün Sonu Giderleri</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("Logout","User")" class="nav-link">
+                                <i class="nav-icon fas fa-power-off"></i>
+                                <p>Çıkış Yap</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <!-- Main content -->
+                    <section class="content">
+                        @RenderBody()
+                        <!-- Default box -->
+                        <!-- /.card -->
+                    </section>
+                    <!-- /.content -->
+                </div>
+            </section>
+        </div>
+        <!-- /.content-wrapper -->
+
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+
+    @RenderSection("scripts", required: false)
+
+    <!-- jQuery -->
+    <script src="@Url.Content("~/Content/plugins/jquery/jquery.min.js")"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="@Url.Content("~/Content/plugins/jquery-ui/jquery-ui.min.js")"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>$.widget.bridge('uibutton', $.ui.button)</script>
+    <!-- Bootstrap 4 -->
+    <script src="@Url.Content("~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/dropzone/dropzone.min.js")"></script>
+
+    <script src="~/Content/plugins/simplemde/simplemde.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="@Url.Content("~/Content/plugins/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datatables-responsive/js/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datatables-responsive/js/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datatables-buttons/js/dataTables.buttons.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datatables-buttons/js/buttons.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/jszip/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/pdfmake/pdfmake.min.js")"></script>s
+    <script src="@Url.Content("~/Content/plugins/pdfmake/vfs_fonts.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datatables-buttons/js/buttons.html5.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/datatables-buttons/js/buttons.print.min.js")"></script>
+    <!-- daterangepicker -->
+    <script src="@Url.Content("~/Content/plugins/moment/moment.min.js")"></script>
+    <script src="@Url.Content("~/Content/plugins/daterangepicker/daterangepicker.js")"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="@Url.Content("~/Content/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js")"></script>
+    <!-- Summernote -->
+    <script src="@Url.Content("~/Content/plugins/summernote/summernote-bs4.min.js")"></script>
+    <!-- Select2 -->
+    <script src="@Url.Content("~/Content/plugins/select2/js/select2.full.min.js")"></script>
+    <!-- AdminLTE App -->
+    <script src="@Url.Content("~/Content/dist/js/adminlte.min.js")"></script>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "excel", "pdf", "print"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+        });
+
+
+        $(function () {
+            // Summernote
+            $('#summernote').summernote()
+        });
+
+    var sessionTimeoutWarning = @Session.Timeout- 1;
+
+    var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 1000;
+    setTimeout('SessionEnd()', sTimeout);
+
+        function SessionEnd() {
+            var id = 1;
+            $.ajax({
+                url: '/User/SessionLogout',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'id': id },
+                success: function (data) {
+                    window.location = "/Security/Login"
+                }
+            });
+        
+    }
+        $(window).on('mouseover', (function () {
+            window.onbeforeunload = null;
+        }));
+        $(window).on('mouseout', (function () {
+            window.onbeforeunload = ConfirmLeave;
+        }));
+        function ConfirmLeave() {
+            return "";
+        }
+        var prevKey = "";
+
+        $(document).keydown(function (e) {
+            if (e.key == "F5") {
+                window.onbeforeunload = ConfirmLeave;
+            }
+            else if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
+                window.onbeforeunload = ConfirmLeave;
+            }
+            prevKey = e.key.toUpperCase();
+        });
+
+        window.onbeforeunload = function (event) {
+            var message = 'Uyarı: Değişikliklerinizi Kaydetmeyi Unutmayın..';
+            if (typeof event == 'undefined') {
+                event = window.event;
+            }
+            if (event) {
+                event.returnValue = message;
+            }
+            return message;
+        };
+
+    </script>
+
+</body>
+</html>

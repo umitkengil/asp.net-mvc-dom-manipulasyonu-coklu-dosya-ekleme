@@ -1,0 +1,61 @@
+﻿@model Bes.Models.BesEntity.storeTable
+
+@{
+    ViewBag.Title = "Mağaza Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</h5>
+    <ul>
+        <li>Tüm Alanlar Doldurulmalıdır</li>
+
+    </ul>
+</div>
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("EditStore", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.storeID, new { @class = "form-control d-none" })
+                        <label>Mağaza Kodu</label>
+                        @Html.TextBoxFor(m => m.storeCode, new { @class = "form-control" })
+                        @*<input type="text" class="form-control" name="storeCode" placeholder="Mağaza Kodu" />*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Mağaza Adı</label>
+                        @Html.TextBoxFor(m => m.storeName, new { @class = "form-control" })
+                        @*<input type="text" class="form-control" name="storeName" placeholder="Mağaza Adı" />*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        @Html.TextAreaFor(m => m.storeDescription, new { @class = "form-control" })
+                        @*<textarea class="form-control" rows="10" placeholder="Açıklama"></textarea>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-outline-success float-right" style="width:125px;">
+                        <i class="fas fa-edit"></i>&nbsp; Güncelle
+                    </button>
+                    <a href="@Url.Action("Index", "Admin")" type="reset" class="btn btn-outline-danger float-left" style="width:125px;">
+                        <i class="fas fa-times-circle"></i>&nbsp; İptal Et
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

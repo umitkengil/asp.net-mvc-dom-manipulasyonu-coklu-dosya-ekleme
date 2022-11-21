@@ -1,0 +1,30 @@
+﻿@model List<Bes.Models.MasrafRapor>
+
+<table id="example1" class="table table-bordered table-sm table-striped">
+   <thead>
+       <tr>
+           <th>Mağaza Adı</th>
+           <th>Masraf Adı</th>
+           <th>Masraf Açıklama</th>
+           <th>Masraf</th>
+       </tr>
+   </thead>
+   <tbody>
+       @foreach (var item in Model)
+       {
+       <tr>
+           <td>@item.magazaAdi</td>
+           <td>@item.masrafKodu</td>
+           @if (item.masrafAciklama != null)
+           {
+               <td>@item.masrafAciklama</td>
+           }
+           else
+           {
+               <td><label class="text-danger">Açıklama Girilmemiş</label></td>
+           }
+           <td>@string.Format("{0:C0}", item.masraf)</td>
+       </tr>
+       }
+   </tbody>
+</table>

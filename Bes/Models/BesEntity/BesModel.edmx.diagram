@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ff6837d3111a43a8adaa7423ab381469" Name="Diagram1" ZoomLevel="89">
+        <EntityTypeShape EntityType="BESModel.bankTable" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="BESModel.expenceTable" Width="1.5" PointX="3" PointY="15.375" />
+        <EntityTypeShape EntityType="BESModel.FileTables" Width="1.5" PointX="5.25" PointY="8.75" />
+        <EntityTypeShape EntityType="BESModel.invoiceLogTable" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BESModel.invoiceTable" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="BESModel.odemeTuruTablosu" Width="1.5" PointX="3" PointY="13.125" />
+        <EntityTypeShape EntityType="BESModel.resfundTable" Width="1.5" PointX="8.25" PointY="8.375" />
+        <EntityTypeShape EntityType="BESModel.resfundTypeTable" Width="1.5" PointX="6" PointY="13.375" />
+        <EntityTypeShape EntityType="BESModel.roleTable" Width="1.5" PointX="0.75" PointY="6.375" />
+        <EntityTypeShape EntityType="BESModel.storeTable" Width="1.5" PointX="0.75" PointY="9" />
+        <EntityTypeShape EntityType="BESModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BESModel.userTable" Width="1.5" PointX="3" PointY="8.25" />
+        <EntityTypeShape EntityType="BESModel.vwInvoiceLog" Width="1.5" PointX="9.75" PointY="0.75" />
+        <AssociationConnector Association="BESModel.FK_invoiceTable_bankTable" />
+        <AssociationConnector Association="BESModel.FK_resfundTable_bankTable" />
+        <AssociationConnector Association="BESModel.FK_invoiceTable_expenceTable" />
+        <AssociationConnector Association="BESModel.FK_FileTables_storeTable" />
+        <AssociationConnector Association="BESModel.FK_FileTables_userTable" />
+        <AssociationConnector Association="BESModel.FK_invoiceTable_odemeTuruTablosu" />
+        <AssociationConnector Association="BESModel.FK_invoiceTable_storeTable" />
+        <AssociationConnector Association="BESModel.FK_invoiceTable_userTable" />
+        <AssociationConnector Association="BESModel.FK_resfundTable_resfundTypeTable" />
+        <AssociationConnector Association="BESModel.FK_resfundTable_storeTable" />
+        <AssociationConnector Association="BESModel.FK_resfundTable_userTable" />
+        <AssociationConnector Association="BESModel.FK_userTable_roleTable" />
+        <AssociationConnector Association="BESModel.FK_userTable_storeTable" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

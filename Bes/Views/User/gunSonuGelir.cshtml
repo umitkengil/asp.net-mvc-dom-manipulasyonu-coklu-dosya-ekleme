@@ -1,0 +1,93 @@
+﻿
+@using Bes.Models.BesEntity
+@model IEnumerable<invoiceTable>
+@{
+    ViewBag.Title = "Gün Sonu Gelirleri";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","User")" class="btn btn-outline-primary btn-md btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön&nbsp;&nbsp;
+                </a>
+                <a href="@Url.Action("gunSonuGider","User")" class="btn btn-outline-secondary btn-md btn-sm float-right">
+                    <i class="fa fa-plus"></i>&nbsp; &nbsp; Gün Sonu Giderleri
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-xl-12">
+        <div class="alert alert-success alert-dismissible">
+            <h4>@ViewBag.magazaAdi Mağazası <span style="padding-left:50%;color:white;">Giriş Yapan Kullanıcı: <span style="color: #070cf9;">@HttpContext.Current.User.Identity.Name</span> </span></h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color:coral;">
+                <h1 style="text-align:center;">Gün Sonu Gelirler</h1>
+            </div>
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-md table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">Kullanıcı Adı</th>
+                            <th style="width: 100px;">Unvanı</th>
+                            <th style="width: 100px;">Banka Adı</th>
+                            <th style="width: 100px;">Nakit</th>
+                            <th style="width: 100px;">Kredi/Banka</th>
+                            <th style="width: 100px;">Ödeme Yöntemi</th>
+                            <th style="width: 100px;">Taksit</th>
+                            <th style="width: 100px;">Hareket Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                        <tr>
+                            @if (m.user_id != @ViewBag.LoginUserId)
+                            {
+                                <td><label class="text-info">@m.userTable.username</label></td>
+                            }
+                            else
+                            {
+                                <td><label class="text-success">@m.userTable.username</label></td>
+                            }
+                            <td>@m.userTable.user_position</td>
+                            <td>@m.bankTable.bankName</td>
+                            @if (m.cash != 0)
+                            {
+                                <td><label class="text-primary">@string.Format("{0:C0}", m.cash)</label></td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">@string.Format("{0:C0}", m.cash)</label></td>
+                            }
+
+                            @if (m.credit != 0)
+                            {
+                                <td><label class="text-primary">@string.Format("{0:C0}", m.credit)</label></td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">@string.Format("{0:C0}", m.credit)</label></td>
+                            }
+                            <td>@m.odemeTuruTablosu.odemeTur</td>
+                            <td>@m.taksitSayisi</td>
+                            <td>@Convert.ToDateTime(m.invoiceDate).ToString("dd/MM/yyyy")</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "Gün Sonu Giderleri";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","User")" class="btn btn-outline-primary btn-md btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön&nbsp;&nbsp;
+                </a>
+                <a href="@Url.Action("gunSonuGelir","User")" class="btn btn-outline-secondary btn-md btn-sm float-right">
+                    <i class="fa fa-plus"></i>&nbsp; &nbsp; Gün Sonu Gelirleri
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-xl-12">
+        <div class="alert alert-success alert-dismissible">
+            <h4>@ViewBag.magazaAdi Mağazası <span style="padding-left:50%;color:white;">Giriş Yapan Kullanıcı: <span style="color: #070cf9;">@HttpContext.Current.User.Identity.Name</span> </span></h4>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color:coral;">
+                <h1 style="text-align:center;">Gün Sonu Giderler</h1>
+            </div>
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-md table-striped">
+                    <thead>
+                        <tr>
+                            @*<th style="width: 100px;">Mağaza</th>*@
+                            <th style="width: 100px;">Kullanıcı Adı</th>
+                            <th style="width: 100px;">Unvanı</th>
+                            <th style="width: 100px;">Masraf Adı</th>
+                            <th style="width: 100px;">Banka</th>
+                            <th style="width: 100px;">Ödeme Yöntemi</th>
+                            <th style="width: 100px;">Taksit</th>
+                            <th style="width: 100px;">Masraf</th>
+                            <th style="width: 100px;">Masraf Açıklama</th>
+                            <th style="width: 100px;">Hareket Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                        <tr>
+                            @*<td>@m.storeTable.storeName</td>*@
+                            @if (m.user_id != @ViewBag.LoginUserId)
+                            {
+                            <td><label class="text-info">@m.userTable.username</label></td>
+                            }
+                            else
+                            {
+                            <td><label class="text-success">@m.userTable.username</label></td>
+                            }
+                            <td>@m.userTable.user_position</td>
+                            @if (m.expenceTable.expenceID != 1)
+                            {
+                                <td>@m.expenceTable.expenceDescription</td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Masrafsız İşlem!!</label></td>
+                            }
+                            <td>@m.bankTable.bankName</td>
+                            <td>@m.odemeTuruTablosu.odemeTur</td>
+                            @if (m.taksitSayisi != 0)
+                            {
+                                <td><label class="text-primary">@m.taksitSayisi</label></td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">@m.taksitSayisi</label></td>
+                            }
+                            @if (m.amount != 0)
+                            {
+                                <td><label class="text-primary">@string.Format("{0:C0}", m.amount)</label></td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">@string.Format("{0:C0}", m.amount)</label></td>
+                            }
+                            @if (m.expenceDescription != null)
+                            {
+                                <td>@m.expenceDescription</td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Açıklama Girilmemiş</label></td>
+                            }
+                            <td>@Convert.ToDateTime(m.invoiceDate).ToString("dd/MM/yyyy")</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

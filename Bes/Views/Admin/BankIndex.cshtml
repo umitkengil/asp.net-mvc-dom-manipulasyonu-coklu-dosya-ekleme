@@ -1,0 +1,58 @@
+﻿@using Bes.Models.BesEntity
+@model List<bankTable>
+@{
+    ViewBag.Title = "Banka Listele";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","Admin")" class="btn btn-outline-primary btn-md btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön
+                </a>
+                <a href="@Url.Action("AddBank","Admin")" class="btn btn-outline-secondary btn-md btn-sm float-right">
+                    <i class="fa fa-plus"></i>&nbsp; Yeni Banka Ekle
+                </a>
+            </div>
+        </div>
+    </div><!-- END column -->
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-sm table-striped">
+                    <thead>
+                        <tr>
+                            @*<th style="width: 5px;">ID</th>*@
+                            <th style="width: 200px;">Banka Kodu</th>
+                            <th style="width: 200px;">Banka Adı</th>
+                            <th style="width: 300px;">Banka Açıklama</th>
+                            <th style="width: 10%;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                            <tr>
+                                @*<td>#@m.bankID</td>*@
+                                <td>@m.bankCode</td>
+                                <td>@m.bankName</td>
+                                <td>@m.bankDescription</td>
+                                <td style="text-align:center;">
+                                    <a href="/Admin/EditBank/@m.bankID" class="btn btn-success">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>
+
+

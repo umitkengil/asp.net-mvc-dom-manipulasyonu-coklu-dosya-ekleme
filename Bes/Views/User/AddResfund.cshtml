@@ -1,0 +1,361 @@
+﻿@using Bes.Models.BesEntity
+@model refundTable
+
+@{
+    ViewBag.Title = "İade İşlemleri";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<script>
+    let index = 1;
+
+    function addRow() {
+        var d1 = document.getElementById("txtstore").value;
+        var d2 = document.getElementById("txtuser").value;
+        var d3 = document.getElementById("txtiadeTuru").value;
+        var d4 = document.getElementById("txtbank").value;
+        var d5 = document.getElementById("txtrefundCash").value
+        var d6 = document.getElementById("txtrefundCredit").value;
+        var d7 = document.getElementById("txtrefundDescription").value;
+        var d8 = document.getElementById("txtrefundDate").value;
+
+        if (d1 != "" && d2 != "" && d3 != "" && d4 != "" && d5 != "" && d6 != "" || d6 == "" && d7 != "" || d7 == "" && d8 != "" || d8 == "")
+        {
+            var table = document.getElementById("datatbl");
+            table.className = "table table-bordered table-hover col-sm";
+            var newrow = table.insertRow(table.rows.length);
+
+            var cell1 = newrow.insertCell(0);
+            var skillsSelect = document.getElementById("txtstore");
+            var selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
+            cell1.innerHTML = selectedText;
+
+            var cell2 = newrow.insertCell(1);
+            var skillsSelect2 = document.getElementById("txtuser");
+            var selectedText2 = skillsSelect2.options[skillsSelect2.selectedIndex].text;
+            cell2.innerHTML = selectedText2;
+
+            var cell3 = newrow.insertCell(2);
+            var skillsSelect3 = document.getElementById("txtiadeTuru");
+            var selectedText3 = skillsSelect3.options[skillsSelect3.selectedIndex].text;
+            cell3.innerHTML = selectedText3;
+
+            var cell4 = newrow.insertCell(3);
+            var skillsSelect4 = document.getElementById("txtbank");
+            var selectedText4 = skillsSelect4.options[skillsSelect4.selectedIndex].text;
+            cell4.innerHTML = selectedText4;
+
+            var cell5 = newrow.insertCell(4);
+            var t5 = document.getElementById("txtrefundCash").value;
+            if (t5 == "") {
+                t5 = 0;
+                cell5.innerHTML = t5;
+            }
+            else {
+                cell5.innerHTML = t5;
+            }
+
+            var cell6 = newrow.insertCell(5);
+            var t6 = document.getElementById("txtrefundCredit").value;
+            if (t6 == "")
+            {
+                t6 = 0;
+                cell6.innerHTML = t6;
+            }
+            else
+            {
+                cell6.innerHTML = t6;
+            }
+
+            var cell7 = newrow.insertCell(6);
+            var t7 = document.getElementById("txtrefundDescription").value;
+            cell7.innerHTML = t7;
+
+            var cell8 = newrow.insertCell(7);
+            var t8 = document.getElementById("txtrefundDate").value;
+            cell8.innerHTML = t8;
+
+            var cell9 = newrow.insertCell(8);
+            var t9 = document.createElement("button");
+            t9.innerHTML = "İptal Et";
+            t9.id = index + "_btn";
+            t9.className = "form-control btn btn-md btn-outline-primary";
+            t9.setAttribute("onclick", "Remove(this);");
+            cell9.appendChild(t9);
+
+            document.getElementById("txtstore").value = "";
+            document.getElementById("txtuser").value = "";
+            document.getElementById("txtiadeTuru").value = "";
+            document.getElementById("txtbank").value = "";
+            document.getElementById("txtrefundCash").value = "";
+            document.getElementById("txtrefundCredit").value = "";
+            document.getElementById("txtrefundDescription").value = "";
+            document.getElementById("txtrefundDate").value = "";
+
+            index++;
+        }
+    }
+
+    function addDatabase() {
+
+        $("#datatbl TBODY TR").each(function () {
+             var row = $(this);
+             var data3 = [{
+                 "store_id": row.find("TD").eq(0).html(),
+                 "user_id": row.find("TD").eq(1).html(),
+                 "refundType": row.find("TD").eq(2).html(),
+                 "bank_id": row.find("TD").eq(3).html(),
+                 "refundCash": row.find("TD").eq(4).html(),
+                 "refundCredit": row.find("TD").eq(5).html(),
+                 "refundDescription": row.find("TD").eq(6).html(),
+                 "refundDate": row.find("TD").eq(7).html()
+            }];
+                $.ajax({
+                    url:'@Url.Action("AddResfund", "User")',
+                    data: JSON.stringify(data3),
+                    type: 'POST',
+                    contentType: 'application/json;',
+                    dataType: 'json',
+                    success: function (result) {
+                        alert("Başarıyla Eklendi")
+                    }
+            });
+        });
+        window.location = "@Url.Action("Index", "User")";
+    }
+
+</script>
+
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</h5>
+    <ul>
+        <li>Tüm Alanlar Doldurulmalıdır(***)</li>
+        <li>ödeme türü Peşin Yapılırsa Taksit ve Gelir Kredi Hareket Devre Dışı Kalır</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 style="text-align:center;">İade Formu Sayfası</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","User")" class="btn btn-outline-primary btn-md btn-md float-left">
+                    <i class="fas fa-chevron-circle-right"></i>&nbsp; Ana Sayfaya Dön&nbsp;&nbsp;
+                </a>
+                <a href="@Url.Action("ResfundIndex","User")" class="btn btn-outline-secondary btn-md btn-md float-right">
+                    <i class="fa fa-list"></i>&nbsp;İadeleri Listele&nbsp;&nbsp;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Mağaza Adı</label>
+                    @Html.DropDownListFor(m => m.storeTable.storeID, (List<SelectListItem>)ViewBag.magazaKodu, "Seçiniz",
+                       new
+                            {
+                           @id = "txtstore",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>İade Alan Kullanıcı</label>
+                    @Html.DropDownListFor(m => m.userTable.userID, (List<SelectListItem>)ViewBag.userKodu, "Seçiniz",
+                       new
+                       {
+                           @id = "txtuser",
+                           @class = "form-control"
+                       })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>İade Tipi</label>
+                    @Html.DropDownListFor(m => m.refundTypeTable.refundTypeID, (List<SelectListItem>)ViewBag.iadeTuru, "Seçiniz",
+                            new
+                            {
+                                @id = "txtiadeTuru",
+                                @class = "form-control"
+                            })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Banka Adı</label>
+                    @Html.DropDownListFor(m => m.bankTable.bankID, (List<SelectListItem>)ViewBag.bankaKodu, "Seçiniz",
+                       new
+                            {
+                           @id = "txtbank",
+                           @class = "form-control",
+                           required = "required"
+                       })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>İade Nakit Hareket</label>
+                    @Html.TextBoxFor(m => m.refundCash,
+                        new
+                             {
+                            @id = "txtrefundCash",
+                            @class = "form-control",
+                            @type = "number",
+                            @min = "0",
+                            @step = "0.1",
+                            @onkeyinput = "validity.valid||(value='');",
+                            @onkeypress = "isNumber(event)",
+                            @placeholder = "Tutarı giriniz.."
+                        })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>İade Kredi Hareket</label>
+                    @Html.TextBoxFor(m => m.refundCredit,
+                      new
+                           {
+                          @id = "txtrefundCredit",
+                          @class = "form-control",
+                          @type = "number",
+                          @min = "0",
+                          @step = "0.1",
+                          @onkeyinput = "validity.valid||(value='');",
+                          @onkeypress = "isNumber(event)",
+                          @placeholder = "Tutarı giriniz.."
+                      })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>İade Açıklama</label>
+                    @Html.TextBoxFor(m => m.refundDescription,
+                        new
+                             {
+                            @id = "txtrefundDescription",
+                            @class = "form-control",
+                            @type = "text",
+                            @placeholder = "Açıklama giriniz.."
+                        })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>İade Tarihi</label>
+                    @Html.TextBoxFor(m => m.refundDate, "{0:yyyy-MM-dd}",
+                        new
+                        {
+                            @id = "txtrefundDate",
+                            @class = "form-control",
+                            @type = "date"
+                        })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-outline-success" style=" width: 20%; float: right; " onclick="addRow()">
+                    <i class="fas fa-plus"></i>&nbsp; Tabloya Ekle
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatbl" class="table table-bordered table-hover col-sm">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px;">Mağaza</th>
+                            <th style="width: 10px;">İadeyi Alan</th>
+                            <th style="width: 10px;">İade Tipi</th>
+                            <th style="width: 10px;">Banka Adı</th>
+                            <th style="width: 10px;">İade Nakit</th>
+                            <th style="width: 10px;">İade Kredi/Banka</th>
+                            <th style="width: 10px;">İade Nedeni</th>
+                            <th style="width: 10px;">Hareket Tarihi</th>
+                            <th style="width: 10px;">Satır İşlemi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="col-md-12 col-sm-12">
+                        <tr id="Addedrow">
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-outline-success pull-right" style="width: 125px; float: right;" onclick="addDatabase()">
+                            <i class="fas fa-save"></i>&nbsp; Kaydet
+                        </button>
+                        <a href="@Url.Action("Index", "User")" type="reset" class="btn btn-outline-danger pull-left" style="width: 125px; float: left;">
+                            <i class="fas fa-times-circle"></i>&nbsp; İptal Et
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/dist/js/jquery-3.6.0.js"></script>
+
+<script>
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        let charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+            evt.preventDefault();
+        } else {
+            return true;
+        }
+    }
+
+    $(function () {
+        $('.datepicker').datepicker();
+    });
+
+    $(function () {
+        $(".example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "excel", "pdf", "print"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    });
+    function Remove(button) {
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        if (confirm("Satırı iptal etmek istiyor musunuz ?")) {
+            var table = $("#datatbl")[0];
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+
+</script>

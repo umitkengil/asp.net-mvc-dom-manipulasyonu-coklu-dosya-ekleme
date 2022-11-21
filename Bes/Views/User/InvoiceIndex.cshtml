@@ -1,0 +1,97 @@
+﻿@using Bes.Models.BesEntity
+@model List<invoiceTable>
+@{
+    ViewBag.Title = "Hareket Listele";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index","User")" class="btn btn-outline-primary btn-md btn-sm float-left">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön&nbsp;&nbsp;
+                </a>
+                <a href="@Url.Action("AddInvoice","User")" class="btn btn-outline-secondary btn-md btn-sm float-right">
+                    <i class="fa fa-plus"></i>&nbsp; &nbsp; Yeni Hareket Ekle
+                </a>
+            </div>
+        </div>
+    </div>
+</div><!-- END column -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-md table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">Mağaza</th>
+                            <th style="width: 100px;">Kullanıcı Adı</th>
+                            <th style="width: 100px;">Masraf Kodu</th>
+                            <th style="width: 100px;">Banka Kodu</th>
+                            <th style="width: 100px;">Nakit</th>
+                            <th style="width: 100px;">Kredi/Banka</th>
+                            <th style="width: 100px;">Peşin</th>
+                            <th style="width: 100px;">Taksit</th>
+                            <th style="width: 100px;">Masraf</th>
+                            <th style="width: 100px;">Masraf Açıklama</th>
+                            <th style="width: 100px;">Hareket Tarihi</th>
+                            <th style="width: 10%;">İşlemler</th>
+                        </tr>
+
+                        </thead>
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                        <tr>
+
+
+                            <td>@m.storeTable.storeName</td>
+                            <td>@m.userTable.username</td>
+                            <td>@m.expenceTable.expenceDescription</td>
+                            <td>@m.bankTable.bankName</td>
+                            <td>@string.Format("{0:C0}", m.cash)</td>
+                            <td>@string.Format("{0:C0}", m.credit)</td>
+                            <td>@m.odemeTuruTablosu.odemeTur</td>
+                            <td>@m.taksitSayisi</td>
+                            <td>@string.Format("{0:C0}", m.amount)</td>
+                            @if (m.expenceDescription != null)
+                            {
+                                <td>@m.expenceDescription</td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Açıklama Girilmemiş</label></td>
+                            }
+                            <td>@Convert.ToDateTime(m.invoiceDate).ToString("dd/MM/yyyy")</td>
+                            @if (m.user_id == @ViewBag.LoginUserId)
+                            {
+                                <td style="text-align:center;">
+                                    <a href="/User/EditInvoice/@m.invoiceID" class="btn btn-success">Güncelle</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Bu işlemi Gerçekleştiremezsiniz!</label></td>
+                            }
+
+
+
+
+                        </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

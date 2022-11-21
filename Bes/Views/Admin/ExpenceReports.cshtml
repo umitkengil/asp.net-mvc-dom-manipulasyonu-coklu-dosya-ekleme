@@ -1,0 +1,90 @@
+﻿@model List<Bes.Models.MasrafRapor>
+@{
+    ViewBag.Title = "Masraf Raporları";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    #card_yukseklik {
+        height: 110px;
+    }
+</style>
+
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</h5>
+    <ul>
+        <li>Başlangıç Tarihi ile Bitiş Tarihi Seçilmek Zorundadır</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body" id="card_yukseklik">
+                <a href="@Url.Action("Index","Admin")" class="btn btn-outline-primary btn-md btn-md">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön&nbsp;&nbsp;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="form-row">
+                    <div class="col">
+                        <label>Başlangıç Tarihi</label>
+                        <input type="date" class="form-control" name="bastar" id="bastar" required>
+                    </div>
+                    <div class="col">
+                        <label>Bitiş Tarihi</label>
+                        <input type="date" class="form-control" name="bittar" id="bittar" required>
+                    </div>
+                </div><br />
+                <button type="submit" 
+                        class="btn btn-success btn-md float-right" 
+                        style="width:100px;" 
+                        value="Getir" 
+                        onclick="getData()" />Getir
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="row" name="row" class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @{ Html.RenderPartial("_raporMasrafPartial");}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function getData() {
+            var bastar = document.getElementById('@Html.Id("bastar")').value;
+            var bittar = document.getElementById('@Html.Id("bittar")').value;
+                if (bastar != "" && bittar != "") {
+                    $.ajax({
+                        url: "@Url.Action("ExpenceFilterReports", "Admin")",
+                        method: 'GET',
+                        data: { start:bastar, end: bittar },
+                        success: function (data) {
+                            $("#example1").html(data);
+                        },
+                    });
+        }
+    }
+
+
+    $(function () {
+        $('.datepicker').datepicker();
+    });
+</script>
+

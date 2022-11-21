@@ -1,0 +1,134 @@
+﻿@model List<Bes.Models.BesEntity.FileTables>
+@{
+    ViewBag.Title = "Dosya Ekle";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> UYARI!!!!!</h5>
+    <ul>
+        <li>Aynı anda 10 adet PDF ve Resim Dosyası yüklenir</li>
+        <li>Aynı anda 3 Adet RAR yada ZIP Dosyası Yüklenir</li>
+        <li>Yüklenecek Dosyalar 200 MB 'Yi geçmemelidir'</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <a href="@Url.Action("Index", "User")" class="btn btn-outline-primary btn-md btn-sm float-right">
+                    <i class="fas fa-chevron-circle-left"></i>&nbsp; Ana Sayfaya Dön
+                </a>
+            </div>
+        </div>
+    </div><!-- END column -->
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                @using (Ajax.BeginForm("AddFiles",
+                    new { id = 1 },
+                    new AjaxOptions { HttpMethod = "POST" },
+                    new { @class = "dropzone", @id = "mydropzone", enctype = "multipart/form-data" })) { }
+            </div>
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-primary btn-md" id="btnUpload" style="margin-bottom: 10px;">
+                    <i class="fa fa-upload"></i>Yükle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:100px;">Mağaza Adı</th>
+                            <th style="width:100px;">Ekleyen Kullanıcı</th>
+                            <th style="width:200px;">Eklenen Dosya Adı</th>
+                            <th style="width:100px;">Eklenme Tarihi</th>
+                            <th style="width:150px;">Dosya İşlemleri</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.storeTable.storeName</td>
+                            <td>@item.userTable.username</td>
+                            <td>@item.fileName</td>
+                            <td>@item.AddedDate</td>
+                            @if (item.user_id == @ViewBag.LoginUserId)
+                            {
+                                <td style="text-align:center;">
+                                    <a href="@Url.Action("FileDownload", "User", new { fileid = @item.fileID })"
+                                       class="btn btn-outline-success btn-sm"><i class="fa fa-download"></i> Dosyayı İndir</a>
+                                    @Html.ActionLink("Dosyayı Sil", "DeleteFile", "User",
+                                   new { fileid = @item.fileID },
+                                   new { @class = "btn btn-outline-danger btn-sm" })
+                                </td>
+                            }
+                            else
+                            {
+                                <td><label class="text-danger">Bu işlemi Gerçekleştiremezsiniz!</label></td>
+                            }
+
+                            @*<td style="text-align:center;">
+                                <a href="@Url.Action("FileDownload", "User", new { fileid = @item.fileID })"
+                                   class="btn btn-outline-success btn-sm"><i class="fa fa-download"></i> Dosyayı İndir</a>
+                                @Html.ActionLink("Dosyayı Sil", "DeleteFile", "User",
+                               new { fileid = @item.fileID },
+                               new { @class = "btn btn-outline-danger btn-sm" })
+                            </td>*@
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>
+
+@*<script src="~/Content/dist/js/jquery-3.6.0.js"></script>*@
+<script src="~/Scripts/jquery-1.8.0.min.js"></script>
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+
+@section scripts{
+    <script>
+
+        Dropzone.autoDiscover = false;
+        $(document).ready(function() {
+            var myDropzone = null;
+
+            $("#mydropzone").dropzone({
+                autoProcessQueue: false,
+                maxFilesize: 512,//mb
+                maxFiles: 5,
+                parallelUploads: 5,
+                acceptedFiles: ".pdf,.txt,.png,.jpeg,.jpg,.rar,.xls",
+                addRemoveLinks: true,
+                init: function () {
+                    var submitButton = document.querySelector("#btnUpload")
+                    myDropzone = this;
+                    submitButton.addEventListener("click", function () {
+                        myDropzone.processQueue();
+                    });
+                }
+            });
+        });
+
+
+    </script>
+}
